@@ -14,8 +14,8 @@ Future<void> setupLocator() async {
   await appSharedPref.initSetup();
   await appHelper.initSetup();
 
-  await Firebase.initializeApp().onError(
-      (error, stackTrace) => AppMessage.errorMessage(error.toString()));
+  // await Firebase.initializeApp().onError(
+  //     (error, stackTrace) => AppMessage.errorMessage(error.toString()));
 
   // singletons:----------------------------------------------------------------
   getIt.registerSingleton<AppSharedPref>(appSharedPref);

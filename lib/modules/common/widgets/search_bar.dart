@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:music_roster_admin/constants/constants.dart';
 
-// ignore: must_be_immutable
 class SearchBar extends StatelessWidget {
-  TextEditingController editingController;
-  Function(String) onChanged;
-  SearchBar({
+  final TextEditingController editingController;
+  final Function(String) onChanged;
+  const SearchBar({
     super.key,
     required this.editingController,
     required this.onChanged,

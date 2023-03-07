@@ -56,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              const Row(),
+              Row(),
               _renderLogoTitleView(),
               GoogleSignInButton(onVerifySucceed: (user) {
                 _onVerifySucceed(user);

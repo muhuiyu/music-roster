@@ -3,9 +3,13 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:music_roster_admin/modules/dashboard/dashboard_screen.dart';
+import 'package:music_roster_admin/modules/manage_members/manage_members_screen.dart';
+import 'package:music_roster_admin/modules/planner/planner_screen.dart';
 import 'package:music_roster_admin/modules/service_model/service_details_screen.dart';
 import 'package:music_roster_admin/modules/team/team_screen.dart';
+import 'package:music_roster_admin/responsive/menu_app_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -32,6 +36,9 @@ Future<void> main() async {
   });
 }
 
+final RouteObserver<ModalRoute<void>> routeObserver =
+    RouteObserver<ModalRoute<void>>();
+
 class TeamRoster extends StatelessWidget {
   const TeamRoster({super.key});
 
@@ -41,6 +48,7 @@ class TeamRoster extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => DataProvider()),
+        ChangeNotifierProvider(create: (context) => MenuAppController()),
       ],
       child: ResponsiveSizer(builder: (context, orientation, screenType) {
         return OverlaySupport.global(
@@ -56,22 +64,17 @@ class TeamRoster extends StatelessWidget {
                 ),
               );
             },
-            home: MyWidget(),
+            theme: ThemeData.light().copyWith(
+              scaffoldBackgroundColor: AppColors.background,
+              textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme)
+                  .apply(bodyColor: AppColors.label),
+            ),
+            home: ManageMembersScreen(),
+            // home: PlannerScreen(),
             // home: const ServiceDetailsScreen(),
           ),
         );
       }),
-    );
-  }
-}
-
-class MyWidget extends StatelessWidget {
-  const MyWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Text('test'),
     );
   }
 }

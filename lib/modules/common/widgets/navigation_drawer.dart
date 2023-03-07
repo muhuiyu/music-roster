@@ -11,11 +11,10 @@ class NavigationDrawerEntry {
       [this.children = const <NavigationDrawerEntry>[]]);
 }
 
-// ignore: must_be_immutable
 class AppNavigationDrawer extends StatelessWidget {
-  ScreenName currentScreen;
+  final ScreenName currentScreen;
 
-  AppNavigationDrawer({
+  const AppNavigationDrawer({
     super.key,
     required this.currentScreen,
   });
@@ -48,15 +47,8 @@ class AppNavigationDrawer extends StatelessWidget {
 
   List<Widget> _renderList(BuildContext context, ScreenName currentScreen) {
     final List<NavigationDrawerEntry> data = <NavigationDrawerEntry>[
-      // NavigationDrawerEntry(ScreenName.weeklyKpi),
-      // NavigationDrawerEntry(ScreenName.report),
-      // NavigationDrawerEntry(
-      //   ScreenName.settings,
-      //   <NavigationDrawerEntry>[
-      //     NavigationDrawerEntry(ScreenName.manageKpi),
-      //     NavigationDrawerEntry(ScreenName.manageEmployee),
-      //   ],
-      // ),
+      NavigationDrawerEntry(ScreenName.planner),
+      NavigationDrawerEntry(ScreenName.manageMembers),
     ];
 
     List<Widget> tiles = data
@@ -103,14 +95,15 @@ class AppNavigationDrawer extends StatelessWidget {
   }
 
   Widget _renderListTileIcon(NavigationDrawerEntry root) {
-    // return root.screen.hasIcon
-    //     ? Image.asset(
-    //         root.screen.getIconName(root.screen == currentScreen),
-    //         width: WidgetSize.drawerIcon,
-    //         height: WidgetSize.drawerIcon,
-    //       )
-    //     : Paddings.drawerIcon;
-    return Paddings.drawerIcon;
+    if (root.screen.hasIcon) {
+      return Icon(
+        root.screen.getIconData(root.screen == currentScreen),
+        size: WidgetSize.drawerIcon,
+        color: AppColors.white,
+      );
+    } else {
+      return Paddings.drawerIcon;
+    }
   }
 
   Widget _renderListTileTitle(NavigationDrawerEntry root, bool isSelected) {
@@ -124,8 +117,8 @@ class AppNavigationDrawer extends StatelessWidget {
     return ListTile(
       selectedTileColor: AppColors.primary,
       contentPadding: Paddings.drawerListTile,
-      leading: Image.asset(AppImage.logout,
-          width: WidgetSize.drawerIcon, height: WidgetSize.drawerIcon),
+      leading: Icon(Icons.logout,
+          size: WidgetSize.drawerIcon, color: AppColors.white),
       title: Text(
         AppText.logout,
         style: AppTextStyle.getNavigationBarItemTextStyle(false),

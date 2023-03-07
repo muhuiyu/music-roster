@@ -24,6 +24,7 @@ class AppColors {
   static Color label = AppColors.darkBlue;
   static Color secondaryLabel = AppColors.darkGrey;
   static Color tertiaryLabel = AppColors.grey;
+  static Color dropdownArrow = Colors.black54;
 
   // background
   static const Color background = CupertinoColors.systemBackground;

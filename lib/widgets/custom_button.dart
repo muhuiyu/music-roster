@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 enum CustomButtonType { primary, primaryWhite, secondary, text }
 
-// ignore: must_be_immutable
 class CustomButton extends StatelessWidget {
   CustomButton({
     super.key,
@@ -16,9 +15,9 @@ class CustomButton extends StatelessWidget {
   final void Function() onPressed;
   final CustomButtonType type;
 
-  Color _backgroundColor = AppColors.primary;
-  Color _borderColor = AppColors.primary;
-  double _borderWidth = 1;
+  late Color _backgroundColor = AppColors.primary;
+  late Color _borderColor = AppColors.primary;
+  late double _borderWidth = 1;
   final double _borderRadius = 8;
 
   _configureStyle() {
@@ -50,8 +49,8 @@ class CustomButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: () => onPressed(),
       style: ButtonStyle(
-        padding:
-            const MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 16)),
+        padding: const MaterialStatePropertyAll(
+            EdgeInsets.symmetric(vertical: 16, horizontal: 16 )),
         shape: MaterialStateProperty.all(RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(_borderRadius),
           side: BorderSide(width: _borderWidth, color: _borderColor),
@@ -65,7 +64,6 @@ class CustomButton extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
 class CustomTextButton extends StatelessWidget {
   CustomTextButton({
     super.key,
@@ -80,8 +78,8 @@ class CustomTextButton extends StatelessWidget {
   final void Function() onPressed;
   final CustomButtonType type;
 
-  String? imageName;
-  Color textColor;
+  final String? imageName;
+  late Color textColor;
 
   _configureStyle() {
     switch (type) {

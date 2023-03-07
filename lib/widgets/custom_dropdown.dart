@@ -3,16 +3,15 @@ import 'package:music_roster_admin/constants/constants.dart';
 
 enum CustomDropDownTitlePosition { top, left }
 
-// ignore: must_be_immutable
 class CustomDropDown extends StatefulWidget {
-  List<String> items;
+  final List<String> items;
   final String title;
-  String value;
-  CustomDropDownTitlePosition titlePosition;
+  final String value;
+  final CustomDropDownTitlePosition titlePosition;
 
   final void Function(String) onChanged;
 
-  CustomDropDown({
+  const CustomDropDown({
     super.key,
     required this.items,
     required this.title,

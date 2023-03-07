@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_roster_admin/models/common/screen_name.dart';
-import 'package:music_roster_admin/modules/common/widgets/app_page.dart';
+import 'package:music_roster_admin/modules/common/widgets/custom_page.dart';
 import 'package:music_roster_admin/widgets/custom_dropdown.dart';
 
 class TeamScreen extends StatefulWidget {

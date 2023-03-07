@@ -1,7 +1,8 @@
 import 'package:music_roster_admin/models/common/year_month_day.dart';
-import 'package:music_roster_admin/models/event/event.dart';
-import 'package:music_roster_admin/models/event/song_record.dart';
+import 'package:music_roster_admin/models/service/service_model.dart';
+import 'package:music_roster_admin/models/service/song_record.dart';
 import 'package:music_roster_admin/models/notifications/team_notification.dart';
+import 'package:music_roster_admin/models/user/user_model.dart';
 import 'package:music_roster_admin/models/user/user_role.dart';
 
 List<TeamNotification> notificationsTestEntries = [
@@ -31,3 +32,62 @@ ServiceModel serviceModelTestEntry = ServiceModel(
         note: 'on key G, only guitar and vocal'),
   ],
 );
+
+List<UserModel> testUsers = [
+  UserModel(
+      uid: 'user-1',
+      name: 'Jeff',
+      email: 'jeff@gmail.com',
+      phoneNumber: '89289093',
+      roles: [UserRole.lead, UserRole.bass]),
+  UserModel(
+      uid: 'user-2',
+      name: 'Grace Young',
+      email: 'graceyoung@gmail.com',
+      phoneNumber: '89289222',
+      roles: [UserRole.vocal]),
+  UserModel(
+      uid: 'user-3',
+      name: 'James',
+      email: 'james@gmail.com',
+      phoneNumber: '89289282',
+      roles: [UserRole.guitar, UserRole.bass]),
+  UserModel(
+      uid: 'user-4',
+      name: 'Grace Yu',
+      email: 'grace.yu@gmail.com',
+      phoneNumber: '89289282',
+      roles: [UserRole.piano, UserRole.drums]),
+  UserModel(
+      uid: 'user-5',
+      name: 'Yong Bin',
+      email: 'yongbin@gmail.com',
+      phoneNumber: '89289282',
+      roles: [UserRole.lead, UserRole.guitar]),
+  UserModel(
+      uid: 'user-6',
+      name: 'Gavin',
+      email: 'gavin@gmail.com',
+      phoneNumber: '89282182',
+      roles: [UserRole.drums]),
+  UserModel(
+      uid: 'user-7',
+      name: 'Kelvin',
+      email: 'kelvin@gmail.com',
+      phoneNumber: '+22289282',
+      roles: [UserRole.vocal, UserRole.piano]),
+  UserModel(
+      uid: 'user-5',
+      name: 'Simon',
+      email: 'simon@gmail.com',
+      phoneNumber: '89289282',
+      roles: [UserRole.pa]),
+];
+
+Map<String, UserModel> userMap = {
+  'user-1': testUsers[0],
+  'user-2': testUsers[1],
+  'user-3': testUsers[2],
+  'user-4': testUsers[3],
+  'user-5': testUsers[4],
+};

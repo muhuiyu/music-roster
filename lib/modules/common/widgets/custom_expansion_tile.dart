@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class CustomExpansionTile extends StatelessWidget {
-  Widget title;
-  List<Widget> children;
-  bool initiallyExpanded;
-  Function(bool)? onExpansionChanged;
-  EdgeInsets? tilePadding;
-  EdgeInsets? childrenPadding;
-  Color? iconColor;
-  Color? collapsedIconColor;
+  final Widget title;
+  final List<Widget> children;
+  final bool initiallyExpanded;
+  final Function(bool)? onExpansionChanged;
+  final EdgeInsets? tilePadding;
+  final EdgeInsets? childrenPadding;
+  final Color? iconColor;
+  final Color? collapsedIconColor;
 
-  CustomExpansionTile({
+  const CustomExpansionTile({
     super.key,
     required this.title,
     required this.children,
     this.initiallyExpanded = false,
+    this.onExpansionChanged,
     this.tilePadding,
     this.childrenPadding,
     this.iconColor,

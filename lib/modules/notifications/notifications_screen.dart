@@ -4,7 +4,7 @@ import 'package:music_roster_admin/constants/app_text.dart';
 import 'package:music_roster_admin/helpers/app_message.dart';
 import 'package:music_roster_admin/models/common/screen_name.dart';
 import 'package:music_roster_admin/models/notifications/team_notification.dart';
-import 'package:music_roster_admin/modules/common/widgets/app_page.dart';
+import 'package:music_roster_admin/modules/common/widgets/custom_page.dart';
 import 'package:provider/provider.dart';
 
 class NotificationsScreen extends StatefulWidget {

@@ -2,17 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:music_roster_admin/api/mock_data.dart';
 import 'package:music_roster_admin/base/base_provider.dart';
 import 'package:music_roster_admin/api/network/endpoints.dart';
+import 'package:music_roster_admin/models/common/year_month_day.dart';
 import 'package:music_roster_admin/models/notifications/team_notification.dart';
+import 'package:music_roster_admin/models/service/service_model.dart';
+import 'package:music_roster_admin/models/user/user_model.dart';
 
 class DataProvider extends BaseProvider {
-  // static const numberOfEntriesPerPage = 10;
+  static const numberOfEntriesPerPage = 10;
 
-  // Future<User?> getUser() async {
-  //   // TODO: add real data
-  //   await fetchAllUsers().then((value) {
-  //     return value.first;
-  //   });
-  // }
+  Future<List<ServiceModel>> fetchServices(
+      int year, int startMonth, int endMonth) async {
+    final sundays = YearMonthDay.getWeekdaysInMonths(
+        DateTime.sunday, year, startMonth, endMonth);
+
+    // TODO: add real data
+    return sundays
+        .map((e) => ServiceModel(date: e, members: {}, songs: []))
+        .toList();
+  }
+
+  Future<Map<String, UserModel>> fetchAllUsers() async {
+    // TODO: add real data
+    return userMap;
+  }
+
+  Future<UserModel?> getUser() async {
+    // TODO: add real data
+    return testUsers[0];
+  }
 
   // /// Returns latest version of kpis in the given quarter of current user
   // Future<KpiDetails> fetchLatestKpiOfCurrentUser(

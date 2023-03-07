@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:music_roster_admin/constants/constants.dart';
 import 'package:music_roster_admin/modules/common/widgets/custom_expansion_tile.dart';
 
-// ignore: must_be_immutable
 class PageCard extends StatelessWidget {
-  String title;
-  String? subtitle;
-  Widget? child;
-  bool isExpansionCard;
-  bool initiallyExpanded;
+  final String title;
+  final String? subtitle;
+  final Widget? child;
+  final bool isExpansionCard;
+  final bool initiallyExpanded;
 
-  String? footerButtonText;
-  Function()? onFooterButtonPressed;
+  final String? footerButtonText;
+  final Function()? onFooterButtonPressed;
 
-  PageCard({
+  const PageCard({
     super.key,
     required this.title,
     this.subtitle,

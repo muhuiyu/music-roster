@@ -2,7 +2,6 @@
 // import 'package:music_roster_admin/extensions/date_time_extensions.dart';
 // import 'package:music_roster_admin/model/common/year_quarter.dart';
 
-// // ignore: must_be_immutable
 // class YearMonthWeek extends Equatable implements Comparable<YearMonthWeek> {
 //   int year;
 //   int month; // 1 to 12

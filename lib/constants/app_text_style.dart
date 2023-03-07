@@ -12,6 +12,16 @@ class AppTextStyle {
     return getTextStyle(AppFont.body, AppColors.secondaryLabel);
   }
 
+  // Tables
+  static TextStyle get tableHeader {
+    return getTextStyle(AppFont.body, AppColors.label,
+        weight: TextStyleWeight.bold);
+  }
+
+  static TextStyle get tableContent {
+    return getTextStyle(AppFont.body, AppColors.label);
+  }
+
   // Card grids
   static TextStyle get cardGridTitle {
     return getTextStyle(AppFont.body, AppColors.label,
@@ -71,8 +81,9 @@ class AppTextStyle {
 
   // Navigation bar
   static TextStyle getNavigationBarItemTextStyle(bool isSelected) {
-    return getTextStyle(
-        AppFont.body, isSelected ? AppColors.label : AppColors.white);
+    // return getTextStyle(
+    //     AppFont.body, isSelected ? AppColors.label : AppColors.white);
+    return getTextStyle(AppFont.body, AppColors.white);
   }
 
   // Button

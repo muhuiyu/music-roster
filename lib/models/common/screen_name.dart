@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:music_roster_admin/constants/constants.dart';
 import 'package:music_roster_admin/modules/account/account_screen.dart';
 import 'package:music_roster_admin/modules/auth/screens/login_screen.dart';
-import 'package:music_roster_admin/modules/common/widgets/app_page.dart';
+import 'package:music_roster_admin/modules/common/widgets/custom_page.dart';
 import 'package:music_roster_admin/modules/dashboard/dashboard_screen.dart';
+import 'package:music_roster_admin/modules/manage_members/manage_members_screen.dart';
+import 'package:music_roster_admin/modules/planner/planner_screen.dart';
 import 'package:music_roster_admin/modules/service_model/service_details_screen.dart';
 import 'package:music_roster_admin/modules/notifications/notifications_screen.dart';
 import 'package:music_roster_admin/modules/team/team_screen.dart';
@@ -11,6 +13,8 @@ import 'package:music_roster_admin/modules/team/team_screen.dart';
 enum ScreenName {
   login,
   dashboard,
+  planner,
+  manageMembers,
   serviceDetails,
   notifications,
   team,
@@ -21,17 +25,6 @@ enum ScreenName {
       if (value.id == rawString) return value;
     }
     return null;
-  }
-
-  static List<ScreenName> toRoute(String rawRouteString) {
-    List<ScreenName> routes = [];
-    rawRouteString.split('/').forEach((element) {
-      var page = ScreenName.fromString(element);
-      if (page != null) {
-        routes.add(page);
-      }
-    });
-    return routes;
   }
 }
 
@@ -54,15 +47,20 @@ extension AppPageTypeExtension on ScreenName {
       case ScreenName.login:
         return null;
       case ScreenName.dashboard:
-        return CustomPageAction.notification;
+        return null;
+      case ScreenName.planner:
+        return null;
+      case ScreenName.manageMembers:
+        return null;
+
       case ScreenName.serviceDetails:
         return null;
       case ScreenName.notifications:
         return null;
       case ScreenName.team:
-        return CustomPageAction.notification;
+        return null;
       case ScreenName.account:
-        return CustomPageAction.notification;
+        return null;
     }
   }
 
@@ -72,6 +70,10 @@ extension AppPageTypeExtension on ScreenName {
         return LoginScreen();
       case ScreenName.dashboard:
         return DashboardScreen();
+      case ScreenName.planner:
+        return PlannerScreen();
+      case ScreenName.manageMembers:
+        return ManageMembersScreen();
       case ScreenName.serviceDetails:
         return ServiceDetailsScreen();
       case ScreenName.notifications:
@@ -89,6 +91,10 @@ extension AppPageTypeExtension on ScreenName {
         return CustomPageType.root;
       case ScreenName.dashboard:
         return CustomPageType.root;
+      case ScreenName.planner:
+        return CustomPageType.root;
+      case ScreenName.manageMembers:
+        return CustomPageType.root;
       case ScreenName.serviceDetails:
         return CustomPageType.sub;
       case ScreenName.notifications:
@@ -105,6 +111,10 @@ extension AppPageTypeExtension on ScreenName {
       case ScreenName.login:
         return AppColors.white;
       case ScreenName.dashboard:
+        return AppColors.primary;
+      case ScreenName.planner:
+        return AppColors.primary;
+      case ScreenName.manageMembers:
         return AppColors.primary;
       case ScreenName.serviceDetails:
         return AppColors.white;
@@ -131,12 +141,21 @@ extension AppPageTypeExtension on ScreenName {
     return '';
   }
 
+  bool get hasIcon {
+    return getIconData(true) != null;
+  }
+
   IconData? getIconData(bool isActive) {
     switch (this) {
       case ScreenName.login:
         return null;
       case ScreenName.dashboard:
         return Icons.dashboard;
+      case ScreenName.planner:
+        return Icons.calendar_month;
+      case ScreenName.manageMembers:
+        return Icons.people;
+
       case ScreenName.serviceDetails:
         return null;
       case ScreenName.notifications:
@@ -158,6 +177,11 @@ extension AppPageTypeExtension on ScreenName {
         return AppText.login;
       case ScreenName.dashboard:
         return AppText.dashboardTitle;
+      case ScreenName.planner:
+        return AppText.plannerTitle;
+      case ScreenName.manageMembers:
+        return AppText.manageMembersTitle;
+
       case ScreenName.serviceDetails:
         return AppText.eventDetailsTitle;
       case ScreenName.notifications:

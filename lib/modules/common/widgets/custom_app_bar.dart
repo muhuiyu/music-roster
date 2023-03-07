@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_roster_admin/constants/constants.dart';
 import 'package:music_roster_admin/models/common/screen_name.dart';
-import 'package:music_roster_admin/modules/common/widgets/app_page.dart';
+import 'package:music_roster_admin/modules/common/widgets/custom_page.dart';
 
-// ignore: must_be_immutable
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  ScreenName currentScreen;
-  Function()? onPressedBackButton;
-  Function()? onPressedSaveButton;
+  final ScreenName currentScreen;
+  final Function()? onPressedBackButton;
+  final Function()? onPressedSaveButton;
 
-  CustomAppBar({
+  const CustomAppBar({
     super.key,
     required this.currentScreen,
     this.onPressedBackButton,

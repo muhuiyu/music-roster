@@ -18,13 +18,12 @@ enum ListTileType {
   }
 }
 
-// ignore: must_be_immutable
 class PageCardGrid extends StatelessWidget {
-  Widget child;
-  ListTileType type;
-  bool isSeparatorHidden;
+  final Widget child;
+  final ListTileType type;
+  final bool isSeparatorHidden;
 
-  PageCardGrid({
+  const PageCardGrid({
     super.key,
     required this.child,
     this.type = ListTileType.other,

@@ -9,4 +9,9 @@ class WidgetSize {
   static double appBarIcon = 24;
   static double appBarNotificationIcon = 32;
   static double calloutIcon = 24;
+
+  // Planner
+  static double plannerBlockHeight = 150;
+  static double plannerBlockWidth = 150;
+  static double plannerUserListWidth = 300;
 }

@@ -1,8 +1,8 @@
 import 'package:music_roster_admin/models/common/year_month_day.dart';
-import 'package:music_roster_admin/models/event/song_record.dart';
+import 'package:music_roster_admin/models/service/song_record.dart';
 import 'package:music_roster_admin/models/user/user_role.dart';
 
-class ServiceModel {
+class ServiceModel implements Comparable<ServiceModel> {
   YearMonthDay date;
   Map<String, List<UserRole>> members;
   List<SongRecord> songs;
@@ -24,5 +24,10 @@ class ServiceModel {
       }
     }
     return null;
+  }
+
+  @override
+  int compareTo(ServiceModel other) {
+    return date.compareTo(other.date);
   }
 }

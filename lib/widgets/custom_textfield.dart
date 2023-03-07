@@ -1,36 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:music_roster_admin/constants/constants.dart';
 
-// ignore: must_be_immutable
-class CustomTextField extends StatefulWidget {
-  String title;
-  String value;
-  String placeholder;
-  Function(String) onChanged;
+class CustomTextField extends StatelessWidget {
+  final TextEditingController editingController;
+  final String title;
+  final String placeholder;
 
-  CustomTextField({
+  const CustomTextField({
     super.key,
+    required this.editingController,
     required this.title,
-    this.value = '',
     this.placeholder = 'Enter...',
-    required this.onChanged,
   });
-
-  @override
-  State<CustomTextField> createState() => _CustomTextFieldState();
-}
-
-class _CustomTextFieldState extends State<CustomTextField> {
-  TextEditingController editingController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    editingController.text = widget.value;
-    editingController.addListener(() {
-      widget.onChanged(editingController.text);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +24,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(widget.title, style: AppTextStyle.dropdownFieldName),
+        Text(title, style: AppTextStyle.dropdownFieldName),
         const SizedBox(height: 12),
         TextField(
           style: AppTextStyle.textFieldText,
@@ -53,13 +34,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
             filled: true,
             fillColor: AppColors.accent,
-            hintText: widget.placeholder,
+            hintText: placeholder,
             hintStyle: AppTextStyle.textFieldPlaceholder,
             enabledBorder: inputBorder,
             border: inputBorder,
             focusedBorder: inputBorder,
           ),
-          maxLines: 3,
+          maxLines: 1,
         ),
       ],
     );

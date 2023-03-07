@@ -1,5 +1,7 @@
 // import 'package:date_util/date_util.dart';
 
+import 'package:music_roster_admin/models/common/year_month_day.dart';
+
 enum DateFormat {
   full,
   normal,
@@ -9,6 +11,10 @@ enum DateFormat {
 extension DateTimeExtension on DateTime {
   String toDateString() {
     return '$day ${getMonthStringFromInt(month, format: DateFormat.short)}, $year';
+  }
+
+  YearMonthDay get yearMonthDay {
+    return YearMonthDay(year: year, month: month, day: day);
   }
 
   DateTime getFirstCertainWeekdayInMonth(int weekday) {

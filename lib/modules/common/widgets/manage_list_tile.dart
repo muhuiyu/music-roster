@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:music_roster_admin/constants/constants.dart';
 import 'package:music_roster_admin/modules/common/widgets/page_card_grid.dart';
 
-// ignore: must_be_immutable
 class ManageListTile extends StatelessWidget {
   final String title;
   final Widget child;
   final ListTileType type;
 
-  Function() onEditButtonPressed;
+  final Function() onEditButtonPressed;
 
-  ManageListTile({
+  const ManageListTile({
     super.key,
     required this.title,
     required this.child,
