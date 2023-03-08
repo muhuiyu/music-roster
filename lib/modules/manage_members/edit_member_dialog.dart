@@ -1,38 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:music_roster_admin/api/mock_data.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:music_roster_admin/constants/constants.dart';
 import 'package:music_roster_admin/models/user/user_model.dart';
 import 'package:music_roster_admin/models/user/user_role.dart';
 import 'package:music_roster_admin/widgets/custom_button.dart';
-// import 'package:multiselect/multiselect.dart';
 import 'package:music_roster_admin/widgets/custom_textfield.dart';
 
 class EditMemberDialog extends StatefulWidget {
-  const EditMemberDialog({super.key});
+  final UserModel user;
+  const EditMemberDialog({super.key, required this.user});
 
   @override
   State<EditMemberDialog> createState() => _EditMemberDialogState();
 }
 
 class _EditMemberDialogState extends State<EditMemberDialog> {
-  // final UserModel _user = Get.arguments[RoutesArgumentKey.user];
-  final UserModel _user = testUsers[0];
-  final List<UserRole> _roleOptions = UserRole.values;
-  late List<UserRole> _currentRoles;
+  final List<MultiSelectItem> _roleOptions = UserRole.values
+      .map((role) => MultiSelectItem<UserRole>(role, role.name))
+      .toList();
+  late UserModel _user;
+  late List<UserRole> _selectedRoles;
   late TextEditingController _nameEditingController;
   late TextEditingController _emailEditingController;
   late TextEditingController _phoneEditingController;
 
+  _onSaveButtonPressed() {
+    UserModel updatedUser = _user;
+    updatedUser.name = _nameEditingController.text;
+    updatedUser.email = _emailEditingController.text;
+    updatedUser.phoneNumber = _phoneEditingController.text;
+    updatedUser.roles = _selectedRoles;
+    Navigator.pop(context, updatedUser);
+  }
+
+  _onCancelButtonPressed() {
+    Navigator.pop(context);
+  }
+
   @override
   void initState() {
     super.initState();
+    _user = widget.user;
     _nameEditingController = TextEditingController();
     _emailEditingController = TextEditingController();
     _phoneEditingController = TextEditingController();
     _nameEditingController.text = _user.name;
     _emailEditingController.text = _user.email ?? '';
     _phoneEditingController.text = _user.phoneNumber ?? '';
-    _currentRoles = _user.roles;
+    _selectedRoles = _user.roles;
   }
 
   @override
@@ -48,44 +63,35 @@ class _EditMemberDialogState extends State<EditMemberDialog> {
           const SizedBox(height: 24),
         ],
       ),
-      content: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 400,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CustomTextField(
-                    editingController: _nameEditingController,
-                    title: AppText.name),
-                Paddings.inlineSpacingBox,
-                CustomTextField(
-                    editingController: _emailEditingController,
-                    title: AppText.email),
-                Paddings.inlineSpacingBox,
-                CustomTextField(
-                    editingController: _phoneEditingController,
-                    title: AppText.phone),
-              ],
-            ),
-          ),
-          const SizedBox(width: 24),
-          SizedBox(
-            width: 400,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _renderRolesDropdown(),
-              ],
-            ),
-          ),
-        ],
+      content: SizedBox(
+        width: 800,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CustomTextField(
+                editingController: _nameEditingController, title: AppText.name),
+            Paddings.inlineSpacingBox,
+            CustomTextField(
+                editingController: _emailEditingController,
+                title: AppText.email),
+            Paddings.inlineSpacingBox,
+            CustomTextField(
+                editingController: _phoneEditingController,
+                title: AppText.phone),
+            Paddings.inlineSpacingBox,
+            _renderRolesMultiSelect(),
+            const SizedBox(height: 48),
+          ],
+        ),
       ),
       actions: [
         CustomButton(
-            onPressed: () {},
+            onPressed: _onCancelButtonPressed,
+            type: CustomButtonType.primaryGrey,
+            child: Text(AppText.cancel,
+                style: AppTextStyle.getButtonTextStyle(AppColors.label))),
+        CustomButton(
+            onPressed: _onSaveButtonPressed,
             type: CustomButtonType.primary,
             child: Text(AppText.save,
                 style: AppTextStyle.getButtonTextStyle(AppColors.white))),
@@ -93,53 +99,42 @@ class _EditMemberDialogState extends State<EditMemberDialog> {
     );
   }
 
-  _configureRoles(List<String> stringValues) {
+  _configureRoles(List<dynamic> values) {
     List<UserRole> roles = [];
-    for (final value in stringValues) {
-      final role = UserRole.getUserRoleFromString(value);
-      if (role != null) {
-        roles.add(role);
-      }
+    for (final value in values) {
+      roles.add(value as UserRole);
     }
     setState(() {
-      _currentRoles = roles;
+      _selectedRoles = roles;
     });
   }
 
-  _renderRolesDropdown() {
+  _renderRolesMultiSelect() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(AppText.editRoles, style: AppTextStyle.dropdownFieldName),
+        Text(AppText.roles, style: AppTextStyle.dropdownFieldName),
         const SizedBox(height: 12),
-        // DropDownMultiSelect(
-        //   options: _roleOptions.map((e) => e.name).toList(),
-        //   selectedValues: _currentRoles.map((e) => e.name).toList(),
-        //   onChanged: _configureRoles,
-        //   whenEmpty: '-',
-        // ),
-        // GFMultiSelect(
-        //   padding: EdgeInsets.zero,
-        //   items: _roleOptions.map((e) => e.name).toList(),
-        //   onSelect: _configureRoles,
-        //   dropdownTitleTileText: _currentRoles.map((e) => e.name).join(', '),
-        //   listItemTextColor: AppColors.label,
-        //   dropdownUnderlineBorder:
-        //       const BorderSide(color: Colors.transparent, width: 2),
-        //   dropdownTitleTileBorder: Border.all(color: Colors.grey, width: 1),
-        //   dropdownTitleTileBorderRadius: BorderRadius.circular(4),
-        //   expandedIcon:
-        //       Icon(Icons.keyboard_arrow_down, color: AppColors.dropdownArrow),
-        //   collapsedIcon:
-        //       Icon(Icons.keyboard_arrow_up, color: AppColors.dropdownArrow),
-        //   dropdownTitleTileTextStyle:
-        //       const TextStyle(fontSize: 14, color: Colors.black54),
-        //   margin: EdgeInsets.zero,
-        //   type: GFCheckboxType.basic,
-        //   activeBgColor: Colors.blue.withOpacity(0.5),
-        //   inactiveBorderColor: Colors.grey,
-        // ),
+        MultiSelectChipField(
+          items: _roleOptions,
+          initialValue: _user.roles,
+          title: Text(
+            _selectedRoles.map((e) => e.name).join(', '),
+            style: AppTextStyle.textFieldText,
+          ),
+          headerColor: AppColors.accent,
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColors.accent),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          selectedChipColor: AppColors.primary.withOpacity(0.5),
+          selectedTextStyle:
+              AppTextStyle.getTextStyle(AppFont.small, AppColors.primary),
+          onTap: (values) {
+            _configureRoles(values);
+          },
+        ),
       ],
     );
   }

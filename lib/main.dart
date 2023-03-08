@@ -66,12 +66,12 @@ class TeamRoster extends StatelessWidget {
             },
             theme: ThemeData.light().copyWith(
               scaffoldBackgroundColor: AppColors.background,
-              textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme)
-                  .apply(bodyColor: AppColors.label),
+              textTheme:
+                  GoogleFonts.assistantTextTheme(Theme.of(context).textTheme)
+                      .apply(bodyColor: AppColors.label),
             ),
-            home: ManageMembersScreen(),
-            // home: PlannerScreen(),
-            // home: const ServiceDetailsScreen(),
+            // home: ManageMembersScreen(),
+            home: PlannerScreen(),
           ),
         );
       }),

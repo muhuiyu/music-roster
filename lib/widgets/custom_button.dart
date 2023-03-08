@@ -1,7 +1,7 @@
 import 'package:music_roster_admin/constants/constants.dart';
 import 'package:flutter/material.dart';
 
-enum CustomButtonType { primary, primaryWhite, secondary, text }
+enum CustomButtonType { primary, primaryWhite, primaryGrey, secondary, text }
 
 class CustomButton extends StatelessWidget {
   CustomButton({
@@ -30,6 +30,10 @@ class CustomButton extends StatelessWidget {
         _backgroundColor = AppColors.white;
         _borderColor = AppColors.white;
         break;
+      case CustomButtonType.primaryGrey:
+        _backgroundColor = AppColors.lightGrey;
+        _borderColor = AppColors.lightGrey;
+        break;
       case CustomButtonType.secondary:
         _backgroundColor = Colors.transparent;
         _borderColor = AppColors.primary;
@@ -50,7 +54,7 @@ class CustomButton extends StatelessWidget {
       onPressed: () => onPressed(),
       style: ButtonStyle(
         padding: const MaterialStatePropertyAll(
-            EdgeInsets.symmetric(vertical: 16, horizontal: 16 )),
+            EdgeInsets.symmetric(vertical: 16, horizontal: 16)),
         shape: MaterialStateProperty.all(RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(_borderRadius),
           side: BorderSide(width: _borderWidth, color: _borderColor),
@@ -88,6 +92,9 @@ class CustomTextButton extends StatelessWidget {
         break;
       case CustomButtonType.primaryWhite:
         textColor = AppColors.primary;
+        break;
+      case CustomButtonType.primaryGrey:
+        textColor = AppColors.secondaryLabel;
         break;
       case CustomButtonType.secondary:
         textColor = AppColors.primary;
