@@ -1,5 +1,9 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:music_roster_admin/api/mock_data.dart';
 import 'package:music_roster_admin/base/base_provider.dart';
+import 'package:music_roster_admin/helpers/app_message.dart';
 import 'package:music_roster_admin/models/common/year_month_day.dart';
 import 'package:music_roster_admin/models/notifications/team_notification.dart';
 import 'package:music_roster_admin/models/service/service_model.dart';
@@ -7,38 +11,49 @@ import 'package:music_roster_admin/models/user/user_model.dart';
 
 class DataProvider extends BaseProvider {
   static const numberOfEntriesPerPage = 10;
-  // CollectionReference servicesReference =
-  //     FirebaseFirestore.instance.collection('services');
-  // CollectionReference usersReference =
-  //     FirebaseFirestore.instance.collection('users');
-  // CollectionReference songsReference =
-  //     FirebaseFirestore.instance.collection('songs');
+  CollectionReference servicesReference =
+      FirebaseFirestore.instance.collection('services');
+  CollectionReference usersReference =
+      FirebaseFirestore.instance.collection('users');
+  CollectionReference songsReference =
+      FirebaseFirestore.instance.collection('songs');
 
   Future<List<ServiceModel>> fetchServices(
       int year, int startMonth, int endMonth) async {
-    // final querySnapshot = await servicesReference
-    //     .where(DataProviderKey.year, isEqualTo: year)
-    //     .where(DataProviderKey.month, isGreaterThanOrEqualTo: startMonth)
-    //     .where(DataProviderKey.month, isLessThanOrEqualTo: endMonth)
-    //     .get()
-    //     .onError(
-    //         (error, stackTrace) => AppMessage.errorMessage(error.toString()));
+    List<ServiceModel> services = [];
+    try {
+      // Fetch records
+      final querySnapshot = await servicesReference
+          .where(DataProviderKey.year, isEqualTo: year)
+          .where(DataProviderKey.monthGroup,
+              isEqualTo: YearMonthDay.getMonthGroupOfMonth(startMonth))
+          .get()
+          .onError((error, stackTrace) {
+        log(error.toString());
+        return AppMessage.errorMessage(error.toString());
+      });
 
-    // List<ServiceModel> services = [];
-    // for (var docSnapshot in querySnapshot.docs) {
-    //   log(docSnapshot.id);
-    //   services.add(
-    //       ServiceModel.fromJson(docSnapshot.data() as Map<String, dynamic>));
-    // }
+      for (var docSnapshot in querySnapshot.docs) {
+        log(docSnapshot.id);
+        services.add(
+            ServiceModel.fromJson(docSnapshot.data() as Map<String, dynamic>));
+      }
 
-    // return services;
-    final sundays = YearMonthDay.getWeekdaysInMonths(
-        DateTime.sunday, year, startMonth, endMonth);
+      // Add dates without records
+      final sundays = YearMonthDay.getWeekdaysInMonths(
+          DateTime.sunday, year, startMonth, endMonth);
 
-    // TODO: add real data
-    return sundays
-        .map((e) => ServiceModel(date: e, members: {}, songs: []))
-        .toList();
+      sundays
+          .where((date) => !services.map((e) => e.date).contains(date))
+          .forEach((date) {
+        services.add(ServiceModel(date: date, members: {}, songs: []));
+      });
+
+      services.sort();
+      return services;
+    } catch (error) {
+      rethrow;
+    }
   }
 
   Future<Map<String, UserModel>> fetchAllUsers() async {
@@ -290,6 +305,7 @@ class DataProviderKey {
   static const date = 'date';
   static const year = 'year';
   static const month = 'month';
+  static const monthGroup = 'monthGroup';
   static const day = 'day';
 
   static const songId = 'songId';

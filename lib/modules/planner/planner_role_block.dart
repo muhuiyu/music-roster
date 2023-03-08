@@ -42,8 +42,7 @@ class _PlannerRoleBlockState extends State<PlannerRoleBlock> {
       context: context,
       builder: (BuildContext context) {
         return MultiSelect(
-            title:
-                'Select ${widget.role.name} on ${widget.date.dateString()}',
+            title: 'Select ${widget.role.name} on ${widget.date.dateString()}',
             selectedItem: _selectedUsers.map((e) => e.name).toList(),
             items: widget.userMap.values
                 .where((user) => user.roles.contains(widget.role))
@@ -77,14 +76,16 @@ class _PlannerRoleBlockState extends State<PlannerRoleBlock> {
             AppFont.body, _isEmpty ? AppColors.grey : AppColors.white),
       ),
       Paddings.cardGridInlineSpacingBox,
-      ElevatedButton(
-        onPressed: _showMultiSelect,
-        child: const Text('Edit'),
-      ),
-      Paddings.cardGridInlineSpacingBox,
     ];
     widgets
         .addAll(widget.selectedUsers.map((e) => _renderUserChip(e)).toList());
+    widgets.addAll([
+      Paddings.cardGridInlineSpacingBox,
+      TextButton(
+        onPressed: _showMultiSelect,
+        child: const Text('Edit'),
+      ),
+    ]);
 
     return Container(
       height: WidgetSize.plannerBlockHeight,

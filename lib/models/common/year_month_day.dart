@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:music_roster_admin/extensions/date_time_extensions.dart';
 
-class YearMonthDay implements Comparable<YearMonthDay> {
+class YearMonthDay extends Equatable implements Comparable<YearMonthDay> {
   int year;
   int month;
   int day;
@@ -116,5 +117,16 @@ class YearMonthDay implements Comparable<YearMonthDay> {
       years.add(year.toString());
     }
     return years;
+  }
+
+  @override
+  List<Object?> get props => [year, month, day];
+
+  int get monthGroup {
+    return (month / 2).ceil();
+  }
+
+  static int getMonthGroupOfMonth(int month) {
+    return (month / 2).ceil();
   }
 }

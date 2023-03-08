@@ -4,8 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class AppHelper {
-  static late AndroidDeviceInfo _androidInfo;
+  // static late AndroidDeviceInfo _androidInfo;
   // static late IosDeviceInfo _iosInfo;
+  // static late WebBrowserInfo _webBrowserInfo;
   static late PackageInfo packageInfo;
 
   AppHelper._privateConstructor();
@@ -20,6 +21,8 @@ class AppHelper {
     //   _androidInfo = await DeviceInfoPlugin().androidInfo;
     // } else if (Platform.isIOS) {
     //   _iosInfo = await DeviceInfoPlugin().iosInfo;
+    // } else {
+    //   _webBrowserInfo = await DeviceInfoPlugin().webBrowserInfo;
     // }
     packageInfo = await PackageInfo.fromPlatform();
   }

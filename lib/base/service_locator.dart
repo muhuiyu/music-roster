@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
+import 'package:music_roster_admin/firebase_options.dart';
 import 'package:music_roster_admin/helpers/app_message.dart';
 import '../helpers/app_helper.dart';
 import '../storage/app_shared_pref.dart';
@@ -14,8 +15,9 @@ Future<void> setupLocator() async {
   await appSharedPref.initSetup();
   await appHelper.initSetup();
 
-  // await Firebase.initializeApp().onError(
-  //     (error, stackTrace) => AppMessage.errorMessage(error.toString()));
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+      .onError(
+          (error, stackTrace) => AppMessage.errorMessage(error.toString()));
 
   // singletons:----------------------------------------------------------------
   getIt.registerSingleton<AppSharedPref>(appSharedPref);

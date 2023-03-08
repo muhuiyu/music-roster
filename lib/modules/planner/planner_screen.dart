@@ -30,17 +30,19 @@ class _PlannerScreenState extends State<PlannerScreen> {
       ? YearMonthDay.now().month
       : YearMonthDay.now().month + 1;
   final int _numberOfMonths = 2;
-  late List<ServiceModel> _services = [];
-  late Map<String, UserModel> _users = {};
+  late List<ServiceModel> _services;
+  late Map<String, UserModel> _users;
   late DataProvider _dataProvider;
 
   @override
   void initState() {
-    super.initState();
+    _services = [];
+    _users = {};
     _dataProvider = Provider.of<DataProvider>(context, listen: false);
     Future.delayed(Duration.zero, () {
       _fetchData();
     });
+    super.initState();
   }
 
   _fetchData() async {
