@@ -18,6 +18,13 @@ class DataProvider extends BaseProvider {
   CollectionReference songsReference =
       FirebaseFirestore.instance.collection('songs');
 
+  Future<List<ServiceModel>> fetchUpcomingServices(
+      {int numberOfServices = 2}) async {
+    final services = await fetchServices(YearMonthDay.now().year,
+        YearMonthDay.now().month, YearMonthDay.now().month + 1);
+    return services.sublist(0, numberOfServices).toList();
+  }
+
   Future<List<ServiceModel>> fetchServices(
       int year, int startMonth, int endMonth) async {
     List<ServiceModel> services = [];

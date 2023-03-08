@@ -47,6 +47,7 @@ class AppNavigationDrawer extends StatelessWidget {
 
   List<Widget> _renderList(BuildContext context, ScreenName currentScreen) {
     final List<NavigationDrawerEntry> data = <NavigationDrawerEntry>[
+      NavigationDrawerEntry(ScreenName.dashboard),
       NavigationDrawerEntry(ScreenName.planner),
       NavigationDrawerEntry(ScreenName.manageMembers),
     ];

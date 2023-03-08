@@ -7,7 +7,7 @@ class AppText {
   static const editMemberTitle = 'Edit Member';
   static const eventDetailsTitle = 'Event Details';
   static const notificationTitle = 'Notifications';
-  static const teamTitle = 'Team';
+  static const availabilityTitle = 'Availability';
   static const accountTitle = 'Account';
 
   // Common

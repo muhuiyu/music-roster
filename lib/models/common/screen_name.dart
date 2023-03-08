@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:music_roster_admin/constants/constants.dart';
 import 'package:music_roster_admin/modules/account/account_screen.dart';
 import 'package:music_roster_admin/modules/auth/screens/login_screen.dart';
+import 'package:music_roster_admin/modules/availability/availability_screen.dart';
 import 'package:music_roster_admin/modules/common/widgets/custom_page.dart';
 import 'package:music_roster_admin/modules/dashboard/dashboard_screen.dart';
 import 'package:music_roster_admin/modules/manage_members/manage_members_screen.dart';
 import 'package:music_roster_admin/modules/planner/planner_screen.dart';
 import 'package:music_roster_admin/modules/service_model/service_details_screen.dart';
 import 'package:music_roster_admin/modules/notifications/notifications_screen.dart';
-import 'package:music_roster_admin/modules/team/team_screen.dart';
 
 enum ScreenName {
   login,
@@ -17,7 +17,7 @@ enum ScreenName {
   manageMembers,
   serviceDetails,
   notifications,
-  team,
+  availability,
   account;
 
   static ScreenName? fromString(String rawString) {
@@ -36,7 +36,7 @@ extension AppPageTypeExtension on ScreenName {
   bool get isRoot {
     var pagesAreRoot = [
       ScreenName.dashboard,
-      ScreenName.team,
+      ScreenName.availability,
       ScreenName.account,
     ];
     return pagesAreRoot.contains(this);
@@ -57,7 +57,7 @@ extension AppPageTypeExtension on ScreenName {
         return null;
       case ScreenName.notifications:
         return null;
-      case ScreenName.team:
+      case ScreenName.availability:
         return null;
       case ScreenName.account:
         return null;
@@ -78,8 +78,8 @@ extension AppPageTypeExtension on ScreenName {
         return ServiceDetailsScreen();
       case ScreenName.notifications:
         return NotificationsScreen();
-      case ScreenName.team:
-        return TeamScreen();
+      case ScreenName.availability:
+        return AvailabilityScreen();
       case ScreenName.account:
         return AccountScreen();
     }
@@ -99,7 +99,7 @@ extension AppPageTypeExtension on ScreenName {
         return CustomPageType.sub;
       case ScreenName.notifications:
         return CustomPageType.modal;
-      case ScreenName.team:
+      case ScreenName.availability:
         return CustomPageType.root;
       case ScreenName.account:
         return CustomPageType.root;
@@ -120,7 +120,7 @@ extension AppPageTypeExtension on ScreenName {
         return AppColors.white;
       case ScreenName.notifications:
         return AppColors.white;
-      case ScreenName.team:
+      case ScreenName.availability:
         return AppColors.primary;
       case ScreenName.account:
         return AppColors.primary;
@@ -160,7 +160,7 @@ extension AppPageTypeExtension on ScreenName {
         return null;
       case ScreenName.notifications:
         return Icons.notifications;
-      case ScreenName.team:
+      case ScreenName.availability:
         return Icons.people;
       case ScreenName.account:
         return Icons.person;
@@ -186,8 +186,8 @@ extension AppPageTypeExtension on ScreenName {
         return AppText.eventDetailsTitle;
       case ScreenName.notifications:
         return AppText.notificationTitle;
-      case ScreenName.team:
-        return AppText.teamTitle;
+      case ScreenName.availability:
+        return AppText.availabilityTitle;
       case ScreenName.account:
         return AppText.accountTitle;
     }

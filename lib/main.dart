@@ -1,17 +1,12 @@
 import 'dart:async';
 
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:music_roster_admin/firebase_options.dart';
 import 'package:music_roster_admin/helpers/app_message.dart';
 import 'package:music_roster_admin/modules/dashboard/dashboard_screen.dart';
 import 'package:music_roster_admin/modules/manage_members/manage_members_screen.dart';
 import 'package:music_roster_admin/modules/planner/planner_screen.dart';
 import 'package:music_roster_admin/modules/service_model/service_details_screen.dart';
-import 'package:music_roster_admin/modules/team/team_screen.dart';
 import 'package:music_roster_admin/responsive/menu_app_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -75,7 +70,8 @@ class TeamRoster extends StatelessWidget {
                       .apply(bodyColor: AppColors.label),
             ),
             // home: ManageMembersScreen(),
-            home: PlannerScreen(),
+            // home: PlannerScreen(),
+            home: DashboardScreen(),
           ),
         );
       }),
