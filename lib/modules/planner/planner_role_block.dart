@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:music_roster_admin/constants/constants.dart';
+import 'package:music_roster_admin/models/common/year_month_day.dart';
 import 'package:music_roster_admin/models/user/user_model.dart';
 import 'package:music_roster_admin/models/user/user_role.dart';
 import 'package:music_roster_admin/modules/planner/planner_multi_select.dart';
 import 'package:music_roster_admin/widgets/custom_button.dart';
 
 class PlannerRoleBlock extends StatefulWidget {
+  final YearMonthDay date;
   final UserRole role;
   final Map<String, UserModel> userMap;
   List<UserModel> selectedUsers;
 
   PlannerRoleBlock({
     super.key,
+    required this.date,
     required this.role,
     required this.userMap,
     required this.selectedUsers,
@@ -39,9 +42,13 @@ class _PlannerRoleBlockState extends State<PlannerRoleBlock> {
       context: context,
       builder: (BuildContext context) {
         return MultiSelect(
-            title: 'Select musician',
+            title:
+                'Select ${widget.role.name} on ${widget.date.dateString()}',
             selectedItem: _selectedUsers.map((e) => e.name).toList(),
-            items: widget.userMap.values.map<String>((e) => e.name).toList());
+            items: widget.userMap.values
+                .where((user) => user.roles.contains(widget.role))
+                .map<String>((e) => e.name)
+                .toList());
       },
     );
 

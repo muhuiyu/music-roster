@@ -34,6 +34,7 @@ class AppText {
   // Dashboard
 
   // Event
+  static const select = 'Select';
   static const note = 'Note';
   static const songs = 'Songs';
   static const members = 'Members';

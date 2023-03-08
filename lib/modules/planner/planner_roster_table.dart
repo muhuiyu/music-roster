@@ -83,6 +83,7 @@ class PlannerRosterTable extends StatelessWidget {
 
     return DataCell(
         PlannerRoleBlock(
+          date: serviceModel.date,
           role: role,
           selectedUsers: users,
           userMap: userMap,

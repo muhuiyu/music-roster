@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:music_roster_admin/api/mock_data.dart';
 import 'package:music_roster_admin/base/base_provider.dart';
-import 'package:music_roster_admin/api/network/endpoints.dart';
 import 'package:music_roster_admin/models/common/year_month_day.dart';
 import 'package:music_roster_admin/models/notifications/team_notification.dart';
 import 'package:music_roster_admin/models/service/service_model.dart';
@@ -9,9 +7,31 @@ import 'package:music_roster_admin/models/user/user_model.dart';
 
 class DataProvider extends BaseProvider {
   static const numberOfEntriesPerPage = 10;
+  // CollectionReference servicesReference =
+  //     FirebaseFirestore.instance.collection('services');
+  // CollectionReference usersReference =
+  //     FirebaseFirestore.instance.collection('users');
+  // CollectionReference songsReference =
+  //     FirebaseFirestore.instance.collection('songs');
 
   Future<List<ServiceModel>> fetchServices(
       int year, int startMonth, int endMonth) async {
+    // final querySnapshot = await servicesReference
+    //     .where(DataProviderKey.year, isEqualTo: year)
+    //     .where(DataProviderKey.month, isGreaterThanOrEqualTo: startMonth)
+    //     .where(DataProviderKey.month, isLessThanOrEqualTo: endMonth)
+    //     .get()
+    //     .onError(
+    //         (error, stackTrace) => AppMessage.errorMessage(error.toString()));
+
+    // List<ServiceModel> services = [];
+    // for (var docSnapshot in querySnapshot.docs) {
+    //   log(docSnapshot.id);
+    //   services.add(
+    //       ServiceModel.fromJson(docSnapshot.data() as Map<String, dynamic>));
+    // }
+
+    // return services;
     final sundays = YearMonthDay.getWeekdaysInMonths(
         DateTime.sunday, year, startMonth, endMonth);
 
@@ -265,29 +285,30 @@ class DataProvider extends BaseProvider {
 }
 
 class DataProviderKey {
+  static const songs = 'songs';
+  static const members = 'members';
+  static const date = 'date';
+  static const year = 'year';
+  static const month = 'month';
+  static const day = 'day';
+
+  static const songId = 'songId';
+  static const songName = 'songName';
+  static const note = 'note';
+
   static const data = 'data';
   static const success = 'success';
   static const users = 'users';
-  static const kpiDetails = 'kpiDetails';
-  static const employeeId = 'employeeId';
   static const name = 'name';
-  static const manager = 'manager';
+  static const phone = 'phone';
+  static const email = 'email';
   static const roles = 'roles';
-  static const scoreYear = 'scoreYear';
-  static const scoreQuarter = 'scoreQuarter';
-  static const scoreWeek = 'scoreWeek';
-  static const scoreValue = 'scoreValue';
-  static const kpis = 'kpis';
-  static const orderNum = 'orderNum';
-  static const kpiId = 'kpiId';
   static const description = 'description';
-  static const scores = 'scores';
   static const version = 'version';
   static const effectiveDate = 'effectiveDate';
   static const createdDate = 'createdDate';
   static const updatedDate = 'updatedDate';
   static const limit = 'limit';
-  static const startKey = 'startKey';
   static const isActive = 'isActive';
   static const pageNumber = 'pageNumber';
 }
