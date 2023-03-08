@@ -16,4 +16,8 @@ class UserModel {
     // this.imageUrl,
     required this.roles,
   });
+
+  static UserModel get emptyUser {
+    return UserModel(uid: '', name: '', roles: []);
+  }
 }

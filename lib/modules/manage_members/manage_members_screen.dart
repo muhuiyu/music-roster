@@ -70,15 +70,15 @@ class _ManageMembersScreenState extends State<ManageMembersScreen> {
     });
   }
 
-  _onEditButtonPressed(UserModel user) {
-    // return showDialog(
-    //   context: context,
-    //   builder: (context) {
-    //     return EditMemberDialog();
-    //   },
-    // );
-    // Get.toNamed(Routes.editMemberScreen,
-    //     arguments: Routes.editMemberArgument(user));
+  _onEditButtonPressed(UserModel user) async {
+    final UserModel updatedUser = await showDialog(
+      context: context,
+      builder: (context) {
+        return EditMemberDialog(user: user);
+      },
+    );
+    _dataProvider.updateUser(updatedUser).onError(
+        (error, stackTrace) => AppMessage.errorMessage(error.toString()));
   }
 
   @override
@@ -93,8 +93,17 @@ class _ManageMembersScreenState extends State<ManageMembersScreen> {
     );
   }
 
-  _showAddMemberDialog() {
-    // TODO:
+  _showAddMemberDialog() async {
+    final UserModel newUser = await showDialog(
+      context: context,
+      builder: (context) {
+        return EditMemberDialog(
+          user: UserModel.emptyUser,
+        );
+      },
+    );
+    _dataProvider.addUser(newUser).onError(
+        (error, stackTrace) => AppMessage.errorMessage(error.toString()));
   }
 
   _renderHeader() {

@@ -73,7 +73,7 @@ class ManageMembersTable extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Chip(
                       label: Text(e.name),
-                      backgroundColor: e.color,
+                      backgroundColor: e.color.withAlpha(100),
                     ),
                   ))
               .toList()),

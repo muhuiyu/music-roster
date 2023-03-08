@@ -31,6 +31,16 @@ class DataProvider extends BaseProvider {
     return testUsers[0];
   }
 
+  Future<bool> addUser(UserModel user) async {
+    // TODO:
+    return false;
+  }
+
+  Future<bool> updateUser(UserModel updatedUser) async {
+    // TODO:
+    return false;
+  }
+
   // /// Returns latest version of kpis in the given quarter of current user
   // Future<KpiDetails> fetchLatestKpiOfCurrentUser(
   //     YearQuarter yearQuarter) async {
