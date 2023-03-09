@@ -1,22 +1,25 @@
 import 'package:music_roster_admin/api/providers/data_provider.dart';
 
 class Song {
-  final String id;
-  final String name;
+  String id;
+  String name;
+  String author;
   String musicLinkString;
   String sheetLinkString;
 
   Song({
     required this.id,
     required this.name,
+    required this.author,
     required this.musicLinkString,
     required this.sheetLinkString,
   });
 
-  factory Song.fromJson(Map<String, dynamic> json) {
+  factory Song.fromJson(String id, Map<String, dynamic> json) {
     return Song(
-      id: json[DataProviderKey.id],
+      id: id,
       name: json[DataProviderKey.name],
+      author: json[DataProviderKey.author],
       musicLinkString: json[DataProviderKey.musicLinkString],
       sheetLinkString: json[DataProviderKey.sheetLinkString],
     );
@@ -26,8 +29,12 @@ class Song {
     return {
       DataProviderKey.id: id,
       DataProviderKey.name: name,
+      DataProviderKey.author: author,
       DataProviderKey.musicLinkString: musicLinkString,
       DataProviderKey.sheetLinkString: sheetLinkString,
     };
   }
+
+  static Song get emptySong => Song(
+      id: '', name: '', author: '', musicLinkString: '', sheetLinkString: '');
 }

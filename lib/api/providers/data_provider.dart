@@ -74,8 +74,9 @@ class DataProvider extends BaseProvider {
           .onError(
               (error, stackTrace) => AppMessage.errorMessage(error.toString()));
 
-      snapshot.docs.forEach((element) {
-        final Song song = Song.fromJson(element.data() as Map<String, dynamic>);
+      snapshot.docs.forEach((doc) {
+        final Song song =
+            Song.fromJson(doc.id, doc.data() as Map<String, dynamic>);
         songMap[song.id] = song;
       });
 
@@ -135,7 +136,9 @@ class DataProvider extends BaseProvider {
         servicesReference
             .doc()
             .set(serviceModel.toJson())
-            .then((value) => null);
+            .then((value) => null)
+            .onError((error, stackTrace) =>
+                AppMessage.errorMessage(error.toString()));
       }
       return true;
     } catch (error) {
@@ -145,14 +148,45 @@ class DataProvider extends BaseProvider {
 
   /// Adds user to users collection
   Future<bool> addUser(UserModel user) async {
-    // TODO:
-    return false;
+    try {
+      usersReference.doc().set(user.toJson).then((value) => null).onError(
+          (error, stackTrace) => AppMessage.errorMessage(error.toString()));
+      return true;
+    } catch (error) {
+      rethrow;
+    }
   }
 
   /// Updates user information to users collections
   Future<bool> updateUser(UserModel updatedUser) async {
     // TODO:
     return false;
+  }
+
+  /// Adds song to songs collection
+  Future<bool> addSong(Song song) async {
+    try {
+      songsReference.doc().set(song.toJson).then((value) => null).onError(
+          (error, stackTrace) => AppMessage.errorMessage(error.toString()));
+      return true;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  /// Updates song
+  Future<bool> updateSong(Song song) async {
+    try {
+      songsReference
+          .doc(song.id)
+          .update(song.toJson)
+          .then((value) => null)
+          .onError(
+              (error, stackTrace) => AppMessage.errorMessage(error.toString()));
+      return true;
+    } catch (error) {
+      rethrow;
+    }
   }
 
   // /// Returns latest version of kpis in the given quarter of current user
@@ -397,6 +431,7 @@ class DataProviderKey {
   static const songId = 'songId';
   static const songName = 'songName';
   static const note = 'note';
+  static const author = 'author';
 
   static const data = 'data';
   static const success = 'success';

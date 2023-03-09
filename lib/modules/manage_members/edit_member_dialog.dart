@@ -24,6 +24,8 @@ class _EditMemberDialogState extends State<EditMemberDialog> {
   late TextEditingController _emailEditingController;
   late TextEditingController _phoneEditingController;
 
+  bool _isSaveButtonEnabled = false;
+
   _onSaveButtonPressed() {
     UserModel updatedUser = _user;
     updatedUser.name = _nameEditingController.text;
@@ -45,9 +47,35 @@ class _EditMemberDialogState extends State<EditMemberDialog> {
     _emailEditingController = TextEditingController();
     _phoneEditingController = TextEditingController();
     _nameEditingController.text = _user.name;
-    _emailEditingController.text = _user.email ?? '';
-    _phoneEditingController.text = _user.phone ?? '';
+    _emailEditingController.text = _user.email;
+    _phoneEditingController.text = _user.phone;
     _selectedRoles = _user.roles;
+
+    _nameEditingController.addListener(() {
+      _configureSaveButton();
+    });
+    _emailEditingController.addListener(() {
+      _configureSaveButton();
+    });
+    _phoneEditingController.addListener(() {
+      _configureSaveButton();
+    });
+  }
+
+  _configureSaveButton() {
+    setState(() {
+      if (_nameEditingController.text != _user.name) {
+        _isSaveButtonEnabled = true;
+      } else if (_emailEditingController.text != _user.email) {
+        _isSaveButtonEnabled = true;
+      } else if (_phoneEditingController.text != _user.phone) {
+        _isSaveButtonEnabled = true;
+      } else if (_selectedRoles != _user.roles) {
+        _isSaveButtonEnabled = true;
+      } else {
+        _isSaveButtonEnabled = false;
+      }
+    });
   }
 
   @override
@@ -92,6 +120,7 @@ class _EditMemberDialogState extends State<EditMemberDialog> {
                 style: AppTextStyle.getButtonTextStyle(AppColors.label))),
         CustomButton(
             onPressed: _onSaveButtonPressed,
+            isEnabled: _isSaveButtonEnabled,
             type: CustomButtonType.primary,
             child: Text(AppText.save,
                 style: AppTextStyle.getButtonTextStyle(AppColors.white))),
@@ -106,6 +135,9 @@ class _EditMemberDialogState extends State<EditMemberDialog> {
     }
     setState(() {
       _selectedRoles = roles;
+      if (_selectedRoles != _user.roles) {
+        _isSaveButtonEnabled = true;
+      }
     });
   }
 

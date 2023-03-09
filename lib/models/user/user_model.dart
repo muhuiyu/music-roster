@@ -18,9 +18,8 @@ class UserModel {
     required this.roles,
   });
 
-  static UserModel get emptyUser {
-    return UserModel(uid: '', name: '', roles: [], email: '', phone: '');
-  }
+  static UserModel get emptyUser =>
+      UserModel(uid: '', name: '', roles: [], email: '', phone: '');
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     List<UserRole> roles = [];

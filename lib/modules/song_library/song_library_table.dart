@@ -1,8 +1,9 @@
+import 'dart:html' as html;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:music_roster_admin/constants/constants.dart';
 import 'package:music_roster_admin/models/service/song.dart';
-import 'package:music_roster_admin/models/user/user_model.dart';
 
 class SongLibraryTable extends StatelessWidget {
   final List<Song> songs;
@@ -15,12 +16,6 @@ class SongLibraryTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> dataColumns = [
-      AppText.name,
-      AppText.musicLink,
-      AppText.sheet,
-    ];
-
     if (songs.isEmpty) {
       return Container();
     }
@@ -33,25 +28,54 @@ class SongLibraryTable extends StatelessWidget {
         width: width,
         child: DataTable(
           columnSpacing: 0,
-          columns: dataColumns
-              .map((e) => DataColumn(
-                  label: Center(
-                      child: Text(e,
-                          textAlign: TextAlign.center,
-                          style: AppTextStyle.tableHeader))))
-              .toList(),
+          columns: _renderDataColumns(width),
           rows: songs
               .map((song) => DataRow(
                     cells: [
                       _renderNameCell(song),
+                      _renderAuthorCell(song),
                       _renderMusicLinkCell(song),
                       _renderSheetCell(song),
+                      _renderActionsCell(song),
                     ],
                   ))
               .toList(),
         ),
       ),
     );
+  }
+
+  List<DataColumn> _renderDataColumns(double width) {
+    return [
+      DataColumn(
+        label: SizedBox(
+          width: width * 0.4,
+          child: Text(AppText.name, style: AppTextStyle.tableHeader),
+        ),
+      ),
+      DataColumn(
+        label: SizedBox(
+          width: width * 0.3,
+          child: Text(AppText.author, style: AppTextStyle.tableHeader),
+        ),
+      ),
+      DataColumn(
+        label: SizedBox(
+          width: width * 0.1,
+          child: Text(AppText.musicLink, style: AppTextStyle.tableHeader),
+        ),
+      ),
+      DataColumn(
+        label: SizedBox(
+            width: width * 0.1,
+            child: Text(AppText.sheet, style: AppTextStyle.tableHeader)),
+      ),
+      DataColumn(
+        label: SizedBox(
+            width: width * 0.1,
+            child: Text(AppText.actions, style: AppTextStyle.tableHeader)),
+      ),
+    ];
   }
 
   _renderNameCell(Song song) {
@@ -63,26 +87,43 @@ class SongLibraryTable extends StatelessWidget {
     );
   }
 
+  _renderAuthorCell(Song song) {
+    return DataCell(
+      Text(song.author, style: AppTextStyle.tableContent),
+      onTap: () {
+        // TODO: tap to copy
+      },
+    );
+  }
+
   _renderMusicLinkCell(Song song) {
+    if (song.musicLinkString.isEmpty) {
+      return DataCell(Container());
+    }
     return DataCell(
       SvgPicture.asset(
         AppImage.youtubeLogo,
         semanticsLabel: 'YouTube logo',
         width: WidgetSize.songLibraryIconSize,
       ),
-      onTap: () {
-        // _showRolesMultiSelect(context);
-      },
+      onTap: () => _launchURL(song.musicLinkString),
     );
   }
 
+  _launchURL(url) {
+    html.window.open(url, '');
+  }
+
   _renderSheetCell(Song song) {
+    if (song.sheetLinkString.isEmpty) {
+      return DataCell(Container());
+    }
     return DataCell(
-      Icon(Icons.note),
-      // Text(song.sheetLinkString ?? '', style: AppTextStyle.tableContent),
-      onTap: () {
-        // TODO: Tap to copy
-      },
+      Icon(
+        Icons.note,
+        size: WidgetSize.songLibraryIconSize,
+      ),
+      onTap: () => _launchURL(song.sheetLinkString),
     );
   }
 

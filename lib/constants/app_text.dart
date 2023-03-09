@@ -7,6 +7,7 @@ class AppText {
   static const editMemberTitle = 'Edit Member';
   static const eventDetailsTitle = 'Event Details';
   static const songLibraryTitle = 'Song Library';
+  static const editSongTitle = 'Edit Song';
   static const notificationTitle = 'Notifications';
   static const availabilityTitle = 'Availability';
   static const accountTitle = 'Account';
@@ -65,8 +66,10 @@ class AppText {
   static const musiciansTitle = 'Musicans';
 
   // Song
+  static const addSongButtonText = 'Add song';
   static const musicLink = 'Music link';
   static const sheet = 'Sheet';
+  static const author = 'Author';
 
   // Account
 

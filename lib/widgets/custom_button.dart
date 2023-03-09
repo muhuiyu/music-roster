@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:music_roster_admin/constants/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -9,11 +10,13 @@ class CustomButton extends StatelessWidget {
     required this.child,
     required this.onPressed,
     required this.type,
+    this.isEnabled = true,
   });
 
   final Widget? child;
   final void Function() onPressed;
   final CustomButtonType type;
+  final bool isEnabled;
 
   late Color _backgroundColor = AppColors.primary;
   late Color _borderColor = AppColors.primary;
@@ -23,20 +26,24 @@ class CustomButton extends StatelessWidget {
   _configureStyle() {
     switch (type) {
       case CustomButtonType.primary:
-        _backgroundColor = AppColors.primary;
-        _borderColor = AppColors.primary;
+        _backgroundColor =
+            isEnabled ? AppColors.primary : AppColors.primary.withOpacity(0.4);
+        _borderColor = isEnabled ? AppColors.primary : Colors.transparent;
         break;
       case CustomButtonType.primaryWhite:
         _backgroundColor = AppColors.white;
         _borderColor = AppColors.white;
         break;
       case CustomButtonType.primaryGrey:
-        _backgroundColor = AppColors.lightGrey;
-        _borderColor = AppColors.lightGrey;
+        _backgroundColor = isEnabled
+            ? AppColors.lightBackgroundGray
+            : AppColors.lightBackgroundGray.withOpacity(0.4);
+        _borderColor = AppColors.lightBackgroundGray;
         break;
       case CustomButtonType.secondary:
         _backgroundColor = Colors.transparent;
-        _borderColor = AppColors.primary;
+        _borderColor =
+            isEnabled ? AppColors.primary : AppColors.primary.withOpacity(0.4);
         break;
       case CustomButtonType.text:
         _backgroundColor = Colors.transparent;
@@ -51,7 +58,7 @@ class CustomButton extends StatelessWidget {
     _configureStyle();
 
     return ElevatedButton(
-      onPressed: () => onPressed(),
+      onPressed: isEnabled ? () => onPressed() : null,
       style: ButtonStyle(
         padding: const MaterialStatePropertyAll(
             EdgeInsets.symmetric(vertical: 16, horizontal: 16)),
@@ -75,12 +82,14 @@ class CustomTextButton extends StatelessWidget {
     this.imageName,
     required this.onPressed,
     required this.type,
+    this.isEnabled = true,
     this.textColor = AppColors.white,
   });
 
   final String text;
   final void Function() onPressed;
   final CustomButtonType type;
+  final bool isEnabled;
 
   final String? imageName;
   late Color textColor;
@@ -91,16 +100,21 @@ class CustomTextButton extends StatelessWidget {
         textColor = AppColors.white;
         break;
       case CustomButtonType.primaryWhite:
-        textColor = AppColors.primary;
+        textColor =
+            isEnabled ? AppColors.primary : AppColors.primary.withOpacity(0.4);
         break;
       case CustomButtonType.primaryGrey:
-        textColor = AppColors.secondaryLabel;
+        textColor = isEnabled
+            ? AppColors.secondaryLabel
+            : AppColors.secondaryLabel.withOpacity(0.4);
         break;
       case CustomButtonType.secondary:
-        textColor = AppColors.primary;
+        textColor =
+            isEnabled ? AppColors.primary : AppColors.primary.withOpacity(0.4);
         break;
       case CustomButtonType.text:
-        textColor = AppColors.primary;
+        textColor =
+            isEnabled ? AppColors.primary : AppColors.primary.withOpacity(0.4);
         break;
     }
   }
@@ -123,6 +137,7 @@ class CustomTextButton extends StatelessWidget {
 
     return CustomButton(
         onPressed: onPressed,
+        isEnabled: isEnabled,
         type: type,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

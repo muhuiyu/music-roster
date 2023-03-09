@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:music_roster_admin/api/providers/data_provider.dart';
 import 'package:music_roster_admin/constants/constants.dart';
 import 'package:music_roster_admin/helpers/app_message.dart';
+import 'package:music_roster_admin/main.dart';
 import 'package:music_roster_admin/models/common/screen_name.dart';
 import 'package:music_roster_admin/models/user/user_model.dart';
 import 'package:music_roster_admin/modules/common/widgets/custom_page.dart';
@@ -18,7 +19,8 @@ class ManageMembersScreen extends StatefulWidget {
   State<ManageMembersScreen> createState() => _ManageMembersScreenState();
 }
 
-class _ManageMembersScreenState extends State<ManageMembersScreen> {
+class _ManageMembersScreenState extends State<ManageMembersScreen>
+    with RouteAware {
   late TextEditingController _editingController;
   late Map<String, UserModel> _users = {};
   late List<UserModel> _displayedUsers = [];
@@ -26,6 +28,9 @@ class _ManageMembersScreenState extends State<ManageMembersScreen> {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      routeObserver.subscribe(this, ModalRoute.of(context)!);
+    });
     _editingController = TextEditingController();
     _dataProvider = Provider.of<DataProvider>(context, listen: false);
     Future.delayed(Duration.zero, () {
@@ -44,6 +49,12 @@ class _ManageMembersScreenState extends State<ManageMembersScreen> {
 
   int getTotalNumberOfPages(List<UserModel> users) {
     return (users.length / DataProvider.numberOfEntriesPerPage).ceil();
+  }
+
+  @override
+  void didPopNext() {
+    _fetchData();
+    super.didPopNext();
   }
 
   _fetchData() async {
@@ -77,8 +88,10 @@ class _ManageMembersScreenState extends State<ManageMembersScreen> {
         return EditMemberDialog(user: user);
       },
     );
-    _dataProvider.updateUser(updatedUser).onError(
-        (error, stackTrace) => AppMessage.errorMessage(error.toString()));
+    if (updatedUser != null) {
+      _dataProvider.updateUser(updatedUser).onError(
+          (error, stackTrace) => AppMessage.errorMessage(error.toString()));
+    }
   }
 
   @override
@@ -102,8 +115,10 @@ class _ManageMembersScreenState extends State<ManageMembersScreen> {
         );
       },
     );
-    _dataProvider.addUser(newUser).onError(
-        (error, stackTrace) => AppMessage.errorMessage(error.toString()));
+    if (newUser != null) {
+      _dataProvider.addUser(newUser).onError(
+          (error, stackTrace) => AppMessage.errorMessage(error.toString()));
+    }
   }
 
   _renderHeader() {
