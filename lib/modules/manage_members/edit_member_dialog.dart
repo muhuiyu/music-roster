@@ -28,7 +28,7 @@ class _EditMemberDialogState extends State<EditMemberDialog> {
     UserModel updatedUser = _user;
     updatedUser.name = _nameEditingController.text;
     updatedUser.email = _emailEditingController.text;
-    updatedUser.phoneNumber = _phoneEditingController.text;
+    updatedUser.phone = _phoneEditingController.text;
     updatedUser.roles = _selectedRoles;
     Navigator.pop(context, updatedUser);
   }
@@ -46,7 +46,7 @@ class _EditMemberDialogState extends State<EditMemberDialog> {
     _phoneEditingController = TextEditingController();
     _nameEditingController.text = _user.name;
     _emailEditingController.text = _user.email ?? '';
-    _phoneEditingController.text = _user.phoneNumber ?? '';
+    _phoneEditingController.text = _user.phone ?? '';
     _selectedRoles = _user.roles;
   }
 

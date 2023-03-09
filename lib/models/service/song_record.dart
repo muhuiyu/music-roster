@@ -18,4 +18,12 @@ class SongRecord {
         songName: json[DataProviderKey.songName] as String,
         note: note);
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      DataProviderKey.songId: songId,
+      DataProviderKey.songName: songName,
+      DataProviderKey.note: note,
+    };
+  }
 }

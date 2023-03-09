@@ -6,6 +6,7 @@ class AppText {
   static const manageMembersTitle = 'Manage Members';
   static const editMemberTitle = 'Edit Member';
   static const eventDetailsTitle = 'Event Details';
+  static const songLibraryTitle = 'Song Library';
   static const notificationTitle = 'Notifications';
   static const availabilityTitle = 'Availability';
   static const accountTitle = 'Account';
@@ -61,6 +62,11 @@ class AppText {
   static const editRoles = 'Edit roles';
   static const editEmail = 'Edit email';
   static const editPhone = 'Edit phone';
+  static const musiciansTitle = 'Musicans';
+
+  // Song
+  static const musicLink = 'Music link';
+  static const sheet = 'Sheet';
 
   // Account
 

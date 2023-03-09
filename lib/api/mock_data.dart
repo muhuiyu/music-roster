@@ -17,10 +17,12 @@ List<TeamNotification> notificationsTestEntries = [
 ];
 
 ServiceModel serviceModelTestEntry = ServiceModel(
-  date: YearMonthDay(year: 2023, month: 12, day: 3),
-  members: {
-    'Grace': [UserRole.bass, UserRole.vocal],
+  date: YearMonthDay(year: 2023, month: 3, day: 5),
+  duty: {
+    UserRole.lead: ['user-1'],
+    UserRole.piano: ['user-4'],
   },
+  rehearsalDates: [YearMonthDay(year: 2023, month: 3, day: 4)],
   songs: [
     SongRecord(
         songId: 'song-1',
@@ -38,56 +40,59 @@ List<UserModel> testUsers = [
       uid: 'user-1',
       name: 'Jeff',
       email: 'jeff@gmail.com',
-      phoneNumber: '89289093',
+      phone: '89289093',
       roles: [UserRole.lead, UserRole.bass]),
   UserModel(
       uid: 'user-2',
       name: 'Grace Young',
       email: 'graceyoung@gmail.com',
-      phoneNumber: '89289222',
+      phone: '89289222',
       roles: [UserRole.vocal]),
   UserModel(
       uid: 'user-3',
       name: 'James',
       email: 'james@gmail.com',
-      phoneNumber: '89289282',
+      phone: '89289282',
       roles: [UserRole.guitar, UserRole.bass]),
   UserModel(
       uid: 'user-4',
       name: 'Grace Yu',
       email: 'grace.yu@gmail.com',
-      phoneNumber: '89289282',
+      phone: '89289282',
       roles: [UserRole.piano, UserRole.drums]),
   UserModel(
       uid: 'user-5',
       name: 'Yong Bin',
       email: 'yongbin@gmail.com',
-      phoneNumber: '89289282',
+      phone: '89289282',
       roles: [UserRole.lead, UserRole.guitar]),
   UserModel(
       uid: 'user-6',
       name: 'Gavin',
       email: 'gavin@gmail.com',
-      phoneNumber: '89282182',
+      phone: '89282182',
       roles: [UserRole.drums]),
   UserModel(
       uid: 'user-7',
       name: 'Kelvin',
       email: 'kelvin@gmail.com',
-      phoneNumber: '+22289282',
+      phone: '+22289282',
       roles: [UserRole.vocal, UserRole.piano]),
   UserModel(
-      uid: 'user-5',
+      uid: 'user-8',
       name: 'Simon',
       email: 'simon@gmail.com',
-      phoneNumber: '89289282',
+      phone: '89289282',
       roles: [UserRole.pa]),
 ];
 
-Map<String, UserModel> userMap = {
-  'user-1': testUsers[0],
-  'user-2': testUsers[1],
-  'user-3': testUsers[2],
-  'user-4': testUsers[3],
-  'user-5': testUsers[4],
-};
+// Map<String, UserModel> userMap = {
+//   'user-1': testUsers[0],
+//   'user-2': testUsers[1],
+//   'user-3': testUsers[2],
+//   'user-4': testUsers[3],
+//   'user-5': testUsers[4],
+//   'user-6': testUsers[5],
+//   'user-7': testUsers[6],
+//   'user-8': testUsers[7],
+// };

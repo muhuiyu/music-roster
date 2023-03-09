@@ -14,4 +14,8 @@ class WidgetSize {
   static double plannerBlockHeight = 150;
   static double plannerBlockWidth = 150;
   static double plannerUserListWidth = 300;
+  static double plannerBlockIconSize = 16;
+
+  // Song library
+  static double songLibraryIconSize = 24;
 }

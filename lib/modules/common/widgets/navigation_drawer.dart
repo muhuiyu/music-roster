@@ -50,6 +50,7 @@ class AppNavigationDrawer extends StatelessWidget {
       NavigationDrawerEntry(ScreenName.dashboard),
       NavigationDrawerEntry(ScreenName.planner),
       NavigationDrawerEntry(ScreenName.manageMembers),
+      NavigationDrawerEntry(ScreenName.songLibrary),
     ];
 
     List<Widget> tiles = data

@@ -19,7 +19,6 @@ class AppImage {
   static const dropdownWhite = 'assets/icon/dropdown-white.png';
   static const dropdownGrey = 'assets/icon/dropdown-grey.png';
 
-  // login
-  static const loginBackgroundImage = 'assets/login_background.png';
-  static const jumpcloudLogo = 'assets/jumpcloud-logo.png';
+  // logo
+  static const youtubeLogo = 'assets/youtube-logo.svg';
 }

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:music_roster_admin/api/providers/data_provider.dart';
 import 'package:music_roster_admin/extensions/date_time_extensions.dart';
 
 class YearMonthDay extends Equatable implements Comparable<YearMonthDay> {
@@ -11,6 +12,21 @@ class YearMonthDay extends Equatable implements Comparable<YearMonthDay> {
     required this.month,
     required this.day,
   });
+
+  factory YearMonthDay.fromJson(Map<String, dynamic> json) {
+    return YearMonthDay(
+        year: json[DataProviderKey.year],
+        month: json[DataProviderKey.month],
+        day: json[DataProviderKey.day]);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      DataProviderKey.year: year,
+      DataProviderKey.month: month,
+      DataProviderKey.day: day,
+    };
+  }
 
   DateTime get dateTime {
     return DateTime(year, month, day);

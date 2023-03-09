@@ -7,7 +7,9 @@ import 'package:music_roster_admin/helpers/app_message.dart';
 import 'package:music_roster_admin/models/common/year_month_day.dart';
 import 'package:music_roster_admin/models/notifications/team_notification.dart';
 import 'package:music_roster_admin/models/service/service_model.dart';
+import 'package:music_roster_admin/models/service/song.dart';
 import 'package:music_roster_admin/models/user/user_model.dart';
+import 'package:music_roster_admin/models/user/user_role.dart';
 
 class DataProvider extends BaseProvider {
   static const numberOfEntriesPerPage = 10;
@@ -36,12 +38,10 @@ class DataProvider extends BaseProvider {
               isEqualTo: YearMonthDay.getMonthGroupOfMonth(startMonth))
           .get()
           .onError((error, stackTrace) {
-        log(error.toString());
         return AppMessage.errorMessage(error.toString());
       });
 
       for (var docSnapshot in querySnapshot.docs) {
-        log(docSnapshot.id);
         services.add(
             ServiceModel.fromJson(docSnapshot.data() as Map<String, dynamic>));
       }
@@ -53,7 +53,8 @@ class DataProvider extends BaseProvider {
       sundays
           .where((date) => !services.map((e) => e.date).contains(date))
           .forEach((date) {
-        services.add(ServiceModel(date: date, members: {}, songs: []));
+        services.add(
+            ServiceModel(date: date, duty: {}, songs: [], rehearsalDates: []));
       });
 
       services.sort();
@@ -63,9 +64,47 @@ class DataProvider extends BaseProvider {
     }
   }
 
+  Future<Map<String, Song>> fetchSongs() async {
+    try {
+      final Map<String, Song> songMap = {};
+
+      final snapshot = await songsReference
+          .get()
+          .then((value) => value)
+          .onError(
+              (error, stackTrace) => AppMessage.errorMessage(error.toString()));
+
+      snapshot.docs.forEach((element) {
+        final Song song = Song.fromJson(element.data() as Map<String, dynamic>);
+        songMap[song.id] = song;
+      });
+
+      return songMap;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
   Future<Map<String, UserModel>> fetchAllUsers() async {
-    // TODO: add real data
-    return userMap;
+    try {
+      final Map<String, UserModel> userMap = {};
+
+      final snapshot = await usersReference
+          .get()
+          .then((value) => value)
+          .onError(
+              (error, stackTrace) => AppMessage.errorMessage(error.toString()));
+
+      snapshot.docs.forEach((element) {
+        final UserModel user =
+            UserModel.fromJson(element.data() as Map<String, dynamic>);
+        userMap[user.uid] = user;
+      });
+
+      return userMap;
+    } catch (error) {
+      rethrow;
+    }
   }
 
   Future<UserModel?> getUser() async {
@@ -73,11 +112,44 @@ class DataProvider extends BaseProvider {
     return testUsers[0];
   }
 
+  /// Updates users for the given role on the given service date
+  Future<bool> updateUsersForRoleOnServiceDate(
+      ServiceModel serviceModel, UserRole role, List<UserModel> users) async {
+    final Map<String, dynamic> data = {
+      DataProviderKey.duty: serviceModel.dutyJson,
+    };
+
+    try {
+      final documentId = await servicesReference
+          .where(DataProviderKey.year, isEqualTo: serviceModel.date.year)
+          .where(DataProviderKey.month, isEqualTo: serviceModel.date.month)
+          .where(DataProviderKey.day, isEqualTo: serviceModel.date.day)
+          .get()
+          .then((value) => value.docChanges.first.doc.id)
+          .onError(
+              (error, stackTrace) => AppMessage.errorMessage(error.toString()));
+
+      if (documentId != null) {
+        servicesReference.doc(documentId).update(data).then((value) => null);
+      } else {
+        servicesReference
+            .doc()
+            .set(serviceModel.toJson())
+            .then((value) => null);
+      }
+      return true;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  /// Adds user to users collection
   Future<bool> addUser(UserModel user) async {
     // TODO:
     return false;
   }
 
+  /// Updates user information to users collections
   Future<bool> updateUser(UserModel updatedUser) async {
     // TODO:
     return false;
@@ -309,12 +381,19 @@ class DataProvider extends BaseProvider {
 class DataProviderKey {
   static const songs = 'songs';
   static const members = 'members';
+  static const duty = 'duty';
   static const date = 'date';
   static const year = 'year';
   static const month = 'month';
   static const monthGroup = 'monthGroup';
   static const day = 'day';
+  static const rehearsalDates = 'rehearsalDates';
 
+  static const id = 'id';
+  static const musicLinkString = 'musicLinkString';
+  static const sheetLinkString = 'sheetLinkString';
+
+  static const userId = 'userId';
   static const songId = 'songId';
   static const songName = 'songName';
   static const note = 'note';

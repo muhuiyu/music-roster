@@ -11,6 +11,7 @@ class Routes {
   static String dashboardScreen = ScreenName.dashboard.route;
   static String manageMembersScreen = ScreenName.manageMembers.route;
   static String plannerScreen = ScreenName.planner.route;
+  static String songLibraryScreen = ScreenName.songLibrary.route;
   static String accountScreen = ScreenName.account.route;
   static String notificationsScreen = ScreenName.notifications.route;
 
@@ -21,6 +22,7 @@ class Routes {
     manageMembersScreen: (BuildContext context) =>
         ScreenName.manageMembers.widget,
     plannerScreen: (BuildContext context) => ScreenName.planner.widget,
+    songLibraryScreen: (BuildContext context) => ScreenName.songLibrary.widget,
     accountScreen: (BuildContext context) => ScreenName.account.widget,
     notificationsScreen: (BuildContext context) =>
         ScreenName.notifications.widget,

@@ -93,7 +93,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               Paddings.inlineSpacingBox,
               Text(
-                'Members: ${serviceModel.members.keys.join(', ')}',
+                'Members: ${serviceModel.duty.values.toSet().join(', ')}',
                 style: AppTextStyle.cardGridSubtitle,
               ),
               Paddings.cardGridInlineSpacingBox,

@@ -5,7 +5,8 @@ import 'package:music_roster_admin/models/user/user_role.dart';
 
 class ServiceModel implements Comparable<ServiceModel> {
   YearMonthDay date;
-  Map<String, List<UserRole>> members;
+  List<YearMonthDay> rehearsalDates;
+  Map<UserRole, List<String>> duty;
   List<SongRecord> songs;
 
   // extra information
@@ -13,7 +14,8 @@ class ServiceModel implements Comparable<ServiceModel> {
 
   ServiceModel({
     required this.date,
-    required this.members,
+    required this.duty,
+    required this.rehearsalDates,
     this.message = '',
     required this.songs,
   });
@@ -24,36 +26,63 @@ class ServiceModel implements Comparable<ServiceModel> {
         month: json[DataProviderKey.month],
         day: json[DataProviderKey.day]);
 
-    Map<String, List<UserRole>> members = {};
+    List<YearMonthDay> rehearsalDates = (json[DataProviderKey.rehearsalDates]
+            as List<dynamic>)
+        .map(
+            (element) => YearMonthDay.fromJson(element as Map<String, dynamic>))
+        .toList();
+
+    Map<UserRole, List<String>> duty = {};
     List<SongRecord> songs = [];
 
-    (json[DataProviderKey.members] as Map<String, dynamic>)
+    (json[DataProviderKey.duty] as Map<String, dynamic>)
         .entries
         .forEach((element) {
-      List<UserRole> roles = [];
-      (element.value as List<dynamic>).forEach((element) {
-        final role = UserRole.getUserRoleFromString((element as String));
-        if (role != null) {
-          roles.add(role);
-        }
-      });
-      members[element.key] = roles;
+      final role = UserRole.getUserRoleFromString(element.key);
+      if (role != null) {
+        duty[role] =
+            (element.value as List<dynamic>).map<String>((e) => e).toList();
+      }
     });
 
     (json[DataProviderKey.songs] as List<dynamic>).forEach((element) {
       songs.add(SongRecord.fromJson(element as Map<String, dynamic>));
     });
 
-    return ServiceModel(date: date, members: members, songs: songs);
+    return ServiceModel(
+        date: date, rehearsalDates: rehearsalDates, duty: duty, songs: songs);
+  }
+
+  Map<String, dynamic> get dutyJson {
+    Map<String, dynamic> dutyJson = {};
+    duty.keys.forEach((key) {
+      dutyJson[key.key] = duty[key];
+    });
+    return dutyJson;
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      DataProviderKey.year: date.year,
+      DataProviderKey.month: date.month,
+      DataProviderKey.day: date.day,
+      DataProviderKey.monthGroup: date.monthGroup,
+      DataProviderKey.duty: dutyJson,
+      DataProviderKey.rehearsalDates: rehearsalDates.map((e) => e.toJson()),
+      DataProviderKey.songs: songs.map((e) => e.toJson()),
+    };
+  }
+
+  List<String> get memberIds {
+    return duty.values.fold(<String>{}, (previousValue, element) {
+      previousValue.addAll(element);
+      return previousValue;
+    }).toList();
   }
 
   String? get leadId {
-    for (var element in members.entries) {
-      if (element.value.contains(UserRole.lead)) {
-        return element.key;
-      }
-    }
-    return null;
+    final leads = duty[UserRole.lead.key];
+    return leads?.first;
   }
 
   @override

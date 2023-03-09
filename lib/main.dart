@@ -7,6 +7,7 @@ import 'package:music_roster_admin/modules/dashboard/dashboard_screen.dart';
 import 'package:music_roster_admin/modules/manage_members/manage_members_screen.dart';
 import 'package:music_roster_admin/modules/planner/planner_screen.dart';
 import 'package:music_roster_admin/modules/service_model/service_details_screen.dart';
+import 'package:music_roster_admin/modules/song_library/song_library_screen.dart';
 import 'package:music_roster_admin/responsive/menu_app_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -70,8 +71,8 @@ class TeamRoster extends StatelessWidget {
                       .apply(bodyColor: AppColors.label),
             ),
             // home: ManageMembersScreen(),
-            // home: PlannerScreen(),
-            home: DashboardScreen(),
+            home: SongLibraryScreen(),
+            // home: DashboardScreen(),
           ),
         );
       }),

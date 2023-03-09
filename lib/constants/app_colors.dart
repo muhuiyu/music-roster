@@ -7,24 +7,24 @@ class AppColors {
   static const Color secondary = Colors.black38;
 
   // error
-  static Color error = Colors.red;
+  static const Color error = Colors.red;
 
-  static Color darkBlue = HexColor.fromHex('23293A');
+  static final Color darkBlue = HexColor.fromHex('23293A');
 
   static const Color white = Colors.white;
   static const Color lightGrey = CupertinoColors.systemGrey4;
-  static Color accent = HexColor.fromHex('F5F6F7');
-  static Color grey = HexColor.fromHex('94A9BB');
-  static Color darkGrey = HexColor.fromHex('61778A');
+  static final Color accent = HexColor.fromHex('F5F6F7');
+  static final Color grey = HexColor.fromHex('94A9BB');
+  static final Color darkGrey = HexColor.fromHex('61778A');
 
   // label and text
   // static const Color label = CupertinoColors.label;
   // static const Color secondaryLabel = CupertinoColors.secondaryLabel;
   // static const Color tertiaryLabel = CupertinoColors.tertiaryLabel;
-  static Color label = AppColors.darkBlue;
-  static Color secondaryLabel = AppColors.darkGrey;
-  static Color tertiaryLabel = AppColors.grey;
-  static Color dropdownArrow = Colors.black54;
+  static final Color label = AppColors.darkBlue;
+  static final Color secondaryLabel = AppColors.darkGrey;
+  static final Color tertiaryLabel = AppColors.grey;
+  static const Color dropdownArrow = Colors.black54;
 
   // background
   static const Color background = CupertinoColors.systemBackground;
@@ -37,10 +37,15 @@ class AppColors {
   static const Color inactiveGrayBackground = Color.fromARGB(70, 207, 207, 207);
   static const Color darkBackgroundGray = CupertinoColors.darkBackgroundGray;
 
+  // Roster
+  static const Color rosterTableBlockDefaultBackground =
+      AppColors.inactiveGrayBackground;
+  static final Color rosterTableBlockFilledBackground = Color(0xFF4285F4);
+
   // kpi
-  static Color red = Colors.red;
-  static Color kpiGreen = Colors.green;
-  static Color kpiAmber = Colors.amber;
+  static const Color red = Colors.red;
+  static const Color kpiGreen = Colors.green;
+  static const Color kpiAmber = Colors.amber;
 
   // Firebase and Google
   static final Color firebaseNavy = Color(0xFF2C384A);

@@ -1,23 +1,52 @@
+import 'package:music_roster_admin/api/providers/data_provider.dart';
 import 'package:music_roster_admin/models/user/user_role.dart';
 
 class UserModel {
   final String uid;
   String name;
-  String? email;
-  String? phoneNumber;
+  String email;
+  String phone;
   // String? imageUrl;
   List<UserRole> roles;
 
   UserModel({
     required this.uid,
     required this.name,
-    this.email,
-    this.phoneNumber,
+    required this.email,
+    required this.phone,
     // this.imageUrl,
     required this.roles,
   });
 
   static UserModel get emptyUser {
-    return UserModel(uid: '', name: '', roles: []);
+    return UserModel(uid: '', name: '', roles: [], email: '', phone: '');
+  }
+
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    List<UserRole> roles = [];
+
+    (json[DataProviderKey.roles] as List<dynamic>).forEach((element) {
+      final role = UserRole.getUserRoleFromString(element as String);
+      if (role != null) {
+        roles.add(role);
+      }
+    });
+
+    return UserModel(
+        uid: json[DataProviderKey.userId],
+        name: json[DataProviderKey.name],
+        email: json[DataProviderKey.email],
+        phone: json[DataProviderKey.phone],
+        roles: roles);
+  }
+
+  Map<String, dynamic> get toJson {
+    return {
+      DataProviderKey.userId: uid,
+      DataProviderKey.name: name,
+      DataProviderKey.email: email,
+      DataProviderKey.phone: phone,
+      DataProviderKey.roles: roles.map((e) => e.key).toList(),
+    };
   }
 }

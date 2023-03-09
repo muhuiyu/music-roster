@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:music_roster_admin/api/mock_data.dart';
 import 'package:music_roster_admin/api/providers/data_provider.dart';
 import 'package:music_roster_admin/constants/constants.dart';
 import 'package:music_roster_admin/helpers/app_message.dart';
@@ -51,7 +48,9 @@ class _PlannerScreenState extends State<PlannerScreen> {
 
     // fetch users
     _dataProvider.fetchAllUsers().then((value) {
-      _users = value;
+      setState(() {
+        _users = value;
+      });
     }).onError(
         (error, stackTrace) => AppMessage.errorMessage(error.toString()));
   }
@@ -99,8 +98,8 @@ class _PlannerScreenState extends State<PlannerScreen> {
                 const SizedBox(width: 36),
                 PlannerRosterTable(
                   services: _services,
-                  onRoleBlockTap: _onRoleBlockTap,
                   userMap: _users,
+                  onSaveButtonPressed: _onSaveButtonPressed,
                 ),
               ],
             ),
@@ -112,12 +111,24 @@ class _PlannerScreenState extends State<PlannerScreen> {
 
   _renderUserList() {
     return PlannerUserList(
-      users: testUsers,
+      users: _users.values.toList(),
+      services: _services,
     );
   }
 
-  _onRoleBlockTap(YearMonthDay date, UserRole role) {
-    // TODO:
-    log('${date.dateString()}, ${role.name}');
+  _onSaveButtonPressed(
+      ServiceModel serviceModel, UserRole role, List<UserModel> users) {
+    serviceModel.duty[role] = users.map((e) => e.uid).toList();
+    setState(() {
+      _services
+          .firstWhere((element) => element.date == serviceModel.date)
+          .duty = serviceModel.duty;
+    });
+
+    _dataProvider
+        .updateUsersForRoleOnServiceDate(serviceModel, role, users)
+        .then((value) {})
+        .onError(
+            (error, stackTrace) => AppMessage.errorMessage(error.toString()));
   }
 }

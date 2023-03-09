@@ -9,6 +9,7 @@ import 'package:music_roster_admin/modules/manage_members/manage_members_screen.
 import 'package:music_roster_admin/modules/planner/planner_screen.dart';
 import 'package:music_roster_admin/modules/service_model/service_details_screen.dart';
 import 'package:music_roster_admin/modules/notifications/notifications_screen.dart';
+import 'package:music_roster_admin/modules/song_library/song_library_screen.dart';
 
 enum ScreenName {
   login,
@@ -16,6 +17,7 @@ enum ScreenName {
   planner,
   manageMembers,
   serviceDetails,
+  songLibrary,
   notifications,
   availability,
   account;
@@ -37,6 +39,7 @@ extension AppPageTypeExtension on ScreenName {
     var pagesAreRoot = [
       ScreenName.dashboard,
       ScreenName.availability,
+      ScreenName.songLibrary,
       ScreenName.account,
     ];
     return pagesAreRoot.contains(this);
@@ -52,7 +55,8 @@ extension AppPageTypeExtension on ScreenName {
         return null;
       case ScreenName.manageMembers:
         return null;
-
+      case ScreenName.songLibrary:
+        return null;
       case ScreenName.serviceDetails:
         return null;
       case ScreenName.notifications:
@@ -74,6 +78,8 @@ extension AppPageTypeExtension on ScreenName {
         return PlannerScreen();
       case ScreenName.manageMembers:
         return ManageMembersScreen();
+      case ScreenName.songLibrary:
+        return SongLibraryScreen();
       case ScreenName.serviceDetails:
         return ServiceDetailsScreen();
       case ScreenName.notifications:
@@ -95,6 +101,8 @@ extension AppPageTypeExtension on ScreenName {
         return CustomPageType.root;
       case ScreenName.manageMembers:
         return CustomPageType.root;
+      case ScreenName.songLibrary:
+        return CustomPageType.root;
       case ScreenName.serviceDetails:
         return CustomPageType.sub;
       case ScreenName.notifications:
@@ -115,6 +123,8 @@ extension AppPageTypeExtension on ScreenName {
       case ScreenName.planner:
         return AppColors.primary;
       case ScreenName.manageMembers:
+        return AppColors.primary;
+      case ScreenName.songLibrary:
         return AppColors.primary;
       case ScreenName.serviceDetails:
         return AppColors.white;
@@ -155,7 +165,8 @@ extension AppPageTypeExtension on ScreenName {
         return Icons.calendar_month;
       case ScreenName.manageMembers:
         return Icons.people;
-
+      case ScreenName.songLibrary:
+        return Icons.music_note;
       case ScreenName.serviceDetails:
         return null;
       case ScreenName.notifications:
@@ -181,7 +192,8 @@ extension AppPageTypeExtension on ScreenName {
         return AppText.plannerTitle;
       case ScreenName.manageMembers:
         return AppText.manageMembersTitle;
-
+      case ScreenName.songLibrary:
+        return AppText.songLibraryTitle;
       case ScreenName.serviceDetails:
         return AppText.eventDetailsTitle;
       case ScreenName.notifications:

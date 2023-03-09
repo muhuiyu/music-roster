@@ -58,6 +58,29 @@ enum UserRole {
     }
   }
 
+  String get key {
+    switch (this) {
+      case UserRole.piano:
+        return AppText.piano.toLowerCase();
+      case UserRole.lead:
+        return AppText.lead.toLowerCase();
+      case UserRole.drums:
+        return AppText.drums.toLowerCase();
+      case UserRole.guitar:
+        return AppText.guitar.toLowerCase();
+      case UserRole.bass:
+        return AppText.bass.toLowerCase();
+      case UserRole.vocal:
+        return AppText.vocal.toLowerCase();
+      case UserRole.cajon:
+        return AppText.cajon.toLowerCase();
+      case UserRole.violin:
+        return AppText.voilin.toLowerCase();
+      case UserRole.pa:
+        return AppText.pa.toLowerCase();
+    }
+  }
+
   String get type {
     switch (this) {
       case UserRole.piano:
@@ -78,6 +101,29 @@ enum UserRole {
         return 'musician';
       case UserRole.pa:
         return 'others';
+    }
+  }
+
+  IconData get iconData {
+    switch (this) {
+      case UserRole.piano:
+        return Icons.piano;
+      case UserRole.lead:
+        return Icons.music_note;
+      case UserRole.drums:
+        return Icons.mic;
+      case UserRole.guitar:
+        return Icons.music_note;
+      case UserRole.bass:
+        return Icons.music_note;
+      case UserRole.vocal:
+        return Icons.mic;
+      case UserRole.cajon:
+        return Icons.add_box;
+      case UserRole.violin:
+        return Icons.music_note;
+      case UserRole.pa:
+        return Icons.headphones;
     }
   }
 
