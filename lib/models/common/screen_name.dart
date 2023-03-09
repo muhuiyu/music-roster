@@ -38,6 +38,7 @@ extension AppPageTypeExtension on ScreenName {
   bool get isRoot {
     var pagesAreRoot = [
       ScreenName.dashboard,
+      ScreenName.planner,
       ScreenName.availability,
       ScreenName.songLibrary,
       ScreenName.account,

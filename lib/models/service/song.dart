@@ -27,7 +27,6 @@ class Song {
 
   Map<String, dynamic> get toJson {
     return {
-      DataProviderKey.id: id,
       DataProviderKey.name: name,
       DataProviderKey.author: author,
       DataProviderKey.musicLinkString: musicLinkString,

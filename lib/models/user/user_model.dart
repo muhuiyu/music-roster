@@ -21,7 +21,7 @@ class UserModel {
   static UserModel get emptyUser =>
       UserModel(uid: '', name: '', roles: [], email: '', phone: '');
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
+  factory UserModel.fromJson(String id, Map<String, dynamic> json) {
     List<UserRole> roles = [];
 
     (json[DataProviderKey.roles] as List<dynamic>).forEach((element) {
@@ -32,7 +32,7 @@ class UserModel {
     });
 
     return UserModel(
-        uid: json[DataProviderKey.userId],
+        uid: id,
         name: json[DataProviderKey.name],
         email: json[DataProviderKey.email],
         phone: json[DataProviderKey.phone],
@@ -41,7 +41,6 @@ class UserModel {
 
   Map<String, dynamic> get toJson {
     return {
-      DataProviderKey.userId: uid,
       DataProviderKey.name: name,
       DataProviderKey.email: email,
       DataProviderKey.phone: phone,

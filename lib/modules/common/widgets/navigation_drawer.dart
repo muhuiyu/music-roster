@@ -33,7 +33,7 @@ class AppNavigationDrawer extends StatelessWidget {
 
   _onLogoutTap() {
     // TODO: connect to logout
-    Get.toNamed(Routes.loginScreen);
+    Get.offAndToNamed(Routes.loginScreen);
   }
 
   Widget _renderDrawerHeader() {
@@ -49,6 +49,7 @@ class AppNavigationDrawer extends StatelessWidget {
     final List<NavigationDrawerEntry> data = <NavigationDrawerEntry>[
       NavigationDrawerEntry(ScreenName.dashboard),
       NavigationDrawerEntry(ScreenName.planner),
+      NavigationDrawerEntry(ScreenName.availability),
       NavigationDrawerEntry(ScreenName.manageMembers),
       NavigationDrawerEntry(ScreenName.songLibrary),
     ];
@@ -77,7 +78,7 @@ class AppNavigationDrawer extends StatelessWidget {
         leading: _renderListTileIcon(root),
         title: _renderListTileTitle(root, isSelected),
         onTap: () {
-          Get.toNamed('/${root.screen.id}');
+          Get.offAndToNamed('/${root.screen.id}');
         },
         selectedColor: AppColors.primary,
         focusColor: AppColors.primary,

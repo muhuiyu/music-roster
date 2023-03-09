@@ -96,9 +96,9 @@ class DataProvider extends BaseProvider {
           .onError(
               (error, stackTrace) => AppMessage.errorMessage(error.toString()));
 
-      snapshot.docs.forEach((element) {
+      snapshot.docs.forEach((doc) {
         final UserModel user =
-            UserModel.fromJson(element.data() as Map<String, dynamic>);
+            UserModel.fromJson(doc.id, doc.data() as Map<String, dynamic>);
         userMap[user.uid] = user;
       });
 
@@ -159,8 +159,17 @@ class DataProvider extends BaseProvider {
 
   /// Updates user information to users collections
   Future<bool> updateUser(UserModel updatedUser) async {
-    // TODO:
-    return false;
+    try {
+      usersReference
+          .doc(updatedUser.uid)
+          .update(updatedUser.toJson)
+          .then((value) => null)
+          .onError(
+              (error, stackTrace) => AppMessage.errorMessage(error.toString()));
+      return true;
+    } catch (error) {
+      rethrow;
+    }
   }
 
   /// Adds song to songs collection
