@@ -18,4 +18,8 @@ class WidgetSize {
 
   // Song library
   static double songLibraryIconSize = 24;
+
+  // Service Details
+  static double serviceDetailsIconSize = 20;
+  static double serviceDetailsIconButtonSize = 28;
 }

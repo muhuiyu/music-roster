@@ -59,7 +59,7 @@ class _SongLibraryScreenState extends State<SongLibraryScreen> with RouteAware {
   }
 
   _fetchData() async {
-    _dataProvider.fetchSongs().then((value) {
+    _dataProvider.fetchAllSongs().then((value) {
       setState(() {
         _songs = value;
         _displayedSongs = _songs.values.toList();

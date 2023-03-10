@@ -6,7 +6,7 @@ class Paddings {
       EdgeInsets.only(left: 16.0, right: 16.0, bottom: 20.0);
 
   static const EdgeInsets pageHeader =
-      EdgeInsets.symmetric(vertical: 24, horizontal: 20);
+      EdgeInsets.symmetric(vertical: 24, horizontal: 24);
   static const EdgeInsets card =
       EdgeInsets.symmetric(vertical: 12, horizontal: 20);
   static const EdgeInsets callout =

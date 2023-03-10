@@ -18,10 +18,7 @@ List<TeamNotification> notificationsTestEntries = [
 
 ServiceModel serviceModelTestEntry = ServiceModel(
   date: YearMonthDay(year: 2023, month: 3, day: 5),
-  duty: {
-    UserRole.lead: ['user-1'],
-    UserRole.piano: ['user-4'],
-  },
+  duty: {},
   rehearsalDates: [YearMonthDay(year: 2023, month: 3, day: 4)],
   songs: [
     SongRecord(

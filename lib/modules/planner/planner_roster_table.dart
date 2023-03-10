@@ -124,16 +124,7 @@ class PlannerRosterTable extends StatelessWidget {
 
   DataCell _renderRoleBlock(
       BuildContext context, ServiceModel serviceModel, UserRole role) {
-    final selectedUsers = serviceModel.duty[role]
-            ?.map((userId) => userMap[userId])
-            .fold(List<UserModel>.empty(growable: true),
-                (previousValue, element) {
-          if (element != null) {
-            previousValue.add(element);
-          }
-          return previousValue;
-        }) ??
-        [];
+    final selectedUsers = serviceModel.duty[role] ?? [];
 
     return DataCell(
         PlannerRoleBlock(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:music_roster_admin/api/providers/data_provider.dart';
 import 'package:music_roster_admin/constants/constants.dart';
 import 'package:music_roster_admin/models/common/screen_name.dart';
 import 'package:music_roster_admin/responsive/menu_app_controller.dart';
@@ -26,7 +25,9 @@ class CustomPageHeader extends StatelessWidget {
             ),
           if (!Responsive.isDesktop(context)) const SizedBox(width: 24),
           if (!Responsive.isMobile(context))
-            Text(screenName.name, style: AppTextStyle.cardTitle),
+            Text(screenName.name,
+                style: AppTextStyle.getTextStyle(AppFont.h1, AppColors.label,
+                    weight: TextStyleWeight.heavy)),
           if (!Responsive.isMobile(context))
             Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
           // Expanded(child: SearchBar()),

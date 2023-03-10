@@ -6,8 +6,11 @@ import 'package:music_roster_admin/helpers/app_message.dart';
 import 'package:music_roster_admin/models/common/screen_name.dart';
 import 'package:music_roster_admin/models/common/year_month_day.dart';
 import 'package:music_roster_admin/models/service/service_model.dart';
+import 'package:music_roster_admin/models/user/user_model.dart';
+import 'package:music_roster_admin/models/user/user_role.dart';
 import 'package:music_roster_admin/modules/common/widgets/custom_page.dart';
 import 'package:music_roster_admin/modules/common/widgets/page_card.dart';
+import 'package:music_roster_admin/modules/dashboard/service_details_dialog.dart';
 import 'package:provider/provider.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -45,15 +48,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return CustomPage(
       currentScreen: ScreenName.dashboard,
       widgets: [
-        _renderHeader(),
         _renderUpcomingServices(),
       ],
     );
-  }
-
-  Widget _renderHeader() {
-    // TODO:
-    return Container();
   }
 
   Widget _renderUpcomingServices() {
@@ -65,9 +62,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       Paddings.inlineSpacingBox,
     ];
-    widgets.add(Row(
+    widgets.add(Column(
         children: _upcomingServices
-            .map((e) => _renderUpcomingServiceCard(e))
+            .map((serviceModel) => UpcomingServiceCard(
+                  serviceModel: serviceModel,
+                  onViewMoreButtonPressed: () {
+                    _onViewMoreButtonPressed(context, serviceModel);
+                  },
+                ))
             .toList()));
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -76,46 +78,94 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _renderUpcomingServiceCard(ServiceModel serviceModel) {
-    return Card(
-      margin: EdgeInsets.only(right: 24),
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: SizedBox(
-          width: 300,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                serviceModel.date.dateString(),
-                style: AppTextStyle.cardTitle,
-              ),
-              Paddings.inlineSpacingBox,
-              Text(
-                'Members: ${serviceModel.duty.values.toSet().join(', ')}',
-                style: AppTextStyle.cardGridSubtitle,
-              ),
-              Paddings.cardGridInlineSpacingBox,
-              Text(
-                'Songs: ${serviceModel.songs.map((e) => e.songName).join(', ')}',
-                style: AppTextStyle.cardGridSubtitle,
-              ),
-              Paddings.inlineSpacingBox,
-              ElevatedButton(
-                  onPressed: () {
-                    // TODO:
-                  },
-                  child: Text('View details'))
-            ],
-          ),
-        ),
+  _onViewMoreButtonPressed(
+    BuildContext context,
+    ServiceModel serviceModel,
+  ) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return ServiceDetailsDialog(serviceModel: serviceModel);
+      },
+    );
+  }
+}
+
+class UpcomingServiceCard extends StatelessWidget {
+  const UpcomingServiceCard({
+    super.key,
+    required this.serviceModel,
+    required this.onViewMoreButtonPressed,
+  });
+  final ServiceModel serviceModel;
+  final Function() onViewMoreButtonPressed;
+
+  _renderDetailsSection(String title, List<Widget> widgets) {
+    widgets.insertAll(0, [
+      Text(
+        title.toUpperCase(),
+        style: AppTextStyle.cardSectionTitle,
       ),
+      Paddings.cardGridInlineSpacingBox,
+    ]);
+    return Container(
+      margin: const EdgeInsets.only(right: 24),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: widgets),
     );
   }
 
-  Widget _renderNotification() {
-    // TODO:
-    return Container();
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.only(right: 12, bottom: 24),
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              serviceModel.date.dateString(isYearDisplaying: true),
+              style: AppTextStyle.cardTitle,
+            ),
+            Paddings.inlineSpacingBox,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                _renderDetailsSection(
+                  'Rehearsal dates',
+                  serviceModel.rehearsalDates
+                      .map<Widget>((e) => Text(
+                            e.dateString(),
+                            style: AppTextStyle.cardSectionText,
+                          ))
+                      .toList(),
+                ),
+                _renderDetailsSection('Lead', [
+                  Text(
+                    serviceModel.duty[UserRole.lead]?.first.name ??
+                        'Not decided',
+                    style: AppTextStyle.cardSectionText,
+                  ),
+                ]),
+              ],
+            ),
+            Paddings.inlineSpacingBox,
+            _renderDetailsSection('Song', [
+              Text(
+                '${serviceModel.songs.map((e) => e.songName).join(', ')}',
+                style: AppTextStyle.cardSectionText,
+              ),
+            ]),
+            Paddings.inlineSpacingBox,
+            ElevatedButton(
+                onPressed: onViewMoreButtonPressed, child: Text('View details'))
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -45,6 +45,22 @@ class AppTextStyle {
     return getTextStyle(AppFont.desc, AppColors.tertiaryLabel);
   }
 
+  // Upcoming service card
+  static TextStyle get cardSectionTitle {
+    return getTextStyle(AppFont.body, AppColors.secondaryLabel,
+        weight: TextStyleWeight.bold);
+  }
+
+  static TextStyle get cardSectionText {
+    return getTextStyle(AppFont.body, AppColors.label);
+  }
+
+  // Service details
+  static TextStyle get serviceDetailsSubtitle {
+    return getTextStyle(AppFont.small, AppColors.tertiaryLabel,
+        weight: TextStyleWeight.heavy);
+  }
+
   // TextFields
   static TextStyle get textFieldText {
     return getTextStyle(AppFont.body, AppColors.label);
@@ -134,13 +150,13 @@ extension AppFontExtension on AppFont {
   double get fontSize {
     switch (this) {
       case AppFont.h1:
-        return 32;
+        return 36;
       case AppFont.h2:
-        return 24;
+        return 32;
       case AppFont.h3:
-        return 20;
+        return 22;
       case AppFont.h4:
-        return 18;
+        return 20;
       case AppFont.body:
         return 16;
       case AppFont.small:

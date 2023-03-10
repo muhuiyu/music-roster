@@ -1,12 +1,13 @@
 import 'package:music_roster_admin/api/providers/data_provider.dart';
 import 'package:music_roster_admin/models/common/year_month_day.dart';
 import 'package:music_roster_admin/models/service/song_record.dart';
+import 'package:music_roster_admin/models/user/user_model.dart';
 import 'package:music_roster_admin/models/user/user_role.dart';
 
 class ServiceModel implements Comparable<ServiceModel> {
   YearMonthDay date;
   List<YearMonthDay> rehearsalDates;
-  Map<UserRole, List<String>> duty;
+  Map<UserRole, List<UserModel>> duty;
   List<SongRecord> songs;
 
   // extra information
@@ -20,7 +21,8 @@ class ServiceModel implements Comparable<ServiceModel> {
     required this.songs,
   });
 
-  factory ServiceModel.fromJson(Map<String, dynamic> json) {
+  factory ServiceModel.fromJson(
+      Map<String, dynamic> json, Map<String, UserModel> userMap) {
     final YearMonthDay date = YearMonthDay(
         year: json[DataProviderKey.year],
         month: json[DataProviderKey.month],
@@ -32,19 +34,25 @@ class ServiceModel implements Comparable<ServiceModel> {
             (element) => YearMonthDay.fromJson(element as Map<String, dynamic>))
         .toList();
 
-    Map<UserRole, List<String>> duty = {};
-    List<SongRecord> songs = [];
-
+    Map<UserRole, List<UserModel>> duty = {};
     (json[DataProviderKey.duty] as Map<String, dynamic>)
         .entries
         .forEach((element) {
       final role = UserRole.getUserRoleFromString(element.key);
       if (role != null) {
-        duty[role] =
-            (element.value as List<dynamic>).map<String>((e) => e).toList();
+        List<UserModel> users = [];
+        duty[role] = (element.value as List<dynamic>)
+            .map<String>((e) => e)
+            .fold(users, (previousValue, id) {
+          if (userMap[id] != null) {
+            previousValue.add(userMap[id]!);
+          }
+          return previousValue;
+        }).toList();
       }
     });
 
+    List<SongRecord> songs = [];
     (json[DataProviderKey.songs] as List<dynamic>).forEach((element) {
       songs.add(SongRecord.fromJson(element as Map<String, dynamic>));
     });
@@ -56,7 +64,7 @@ class ServiceModel implements Comparable<ServiceModel> {
   Map<String, dynamic> get dutyJson {
     Map<String, dynamic> dutyJson = {};
     duty.keys.forEach((key) {
-      dutyJson[key.key] = duty[key];
+      dutyJson[key.key] = duty[key]?.map((e) => e.uid).toList();
     });
     return dutyJson;
   }
@@ -75,14 +83,14 @@ class ServiceModel implements Comparable<ServiceModel> {
 
   List<String> get memberIds {
     return duty.values.fold(<String>{}, (previousValue, element) {
-      previousValue.addAll(element);
+      previousValue.addAll(element.map((e) => e.uid));
       return previousValue;
     }).toList();
   }
 
   String? get leadId {
     final leads = duty[UserRole.lead.key];
-    return leads?.first;
+    return leads?.first.uid;
   }
 
   @override

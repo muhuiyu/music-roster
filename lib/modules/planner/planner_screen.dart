@@ -118,7 +118,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
 
   _onSaveButtonPressed(
       ServiceModel serviceModel, UserRole role, List<UserModel> users) {
-    serviceModel.duty[role] = users.map((e) => e.uid).toList();
+    serviceModel.duty[role] = users;
     setState(() {
       _services
           .firstWhere((element) => element.date == serviceModel.date)

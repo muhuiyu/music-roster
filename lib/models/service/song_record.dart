@@ -14,15 +14,15 @@ class SongRecord {
   factory SongRecord.fromJson(Map<String, dynamic> json) {
     final String note = json[DataProviderKey.note] ?? '';
     return SongRecord(
-        songId: json[DataProviderKey.songId] as String,
-        songName: json[DataProviderKey.songName] as String,
+        songId: json[DataProviderKey.id] as String,
+        songName: json[DataProviderKey.name] as String,
         note: note);
   }
 
   Map<String, dynamic> toJson() {
     return {
-      DataProviderKey.songId: songId,
-      DataProviderKey.songName: songName,
+      DataProviderKey.id: songId,
+      DataProviderKey.name: songName,
       DataProviderKey.note: note,
     };
   }

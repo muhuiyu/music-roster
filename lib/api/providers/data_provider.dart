@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:music_roster_admin/api/mock_data.dart';
 import 'package:music_roster_admin/base/base_provider.dart';
@@ -20,6 +18,16 @@ class DataProvider extends BaseProvider {
   CollectionReference songsReference =
       FirebaseFirestore.instance.collection('songs');
 
+  // TODO: add cache management
+  Map<String, UserModel> usersCache = {};
+  Map<String, Song> songCache = {};
+  DateTime lastFetchedTimeOfUsers = DateTime.fromMicrosecondsSinceEpoch(0);
+  DateTime lastFetchedTimeOfSongs = DateTime.fromMicrosecondsSinceEpoch(0);
+
+  String getUserNameFromCache(String userId) {
+    return usersCache[userId]?.name ?? '';
+  }
+
   Future<List<ServiceModel>> fetchUpcomingServices(
       {int numberOfServices = 2}) async {
     final services = await fetchServices(YearMonthDay.now().year,
@@ -31,6 +39,8 @@ class DataProvider extends BaseProvider {
       int year, int startMonth, int endMonth) async {
     List<ServiceModel> services = [];
     try {
+      fetchAllUsers();
+
       // Fetch records
       final querySnapshot = await servicesReference
           .where(DataProviderKey.year, isEqualTo: year)
@@ -42,8 +52,8 @@ class DataProvider extends BaseProvider {
       });
 
       for (var docSnapshot in querySnapshot.docs) {
-        services.add(
-            ServiceModel.fromJson(docSnapshot.data() as Map<String, dynamic>));
+        services.add(ServiceModel.fromJson(
+            docSnapshot.data() as Map<String, dynamic>, usersCache));
       }
 
       // Add dates without records
@@ -64,7 +74,10 @@ class DataProvider extends BaseProvider {
     }
   }
 
-  Future<Map<String, Song>> fetchSongs() async {
+  Future<Map<String, Song>> fetchAllSongs() async {
+    if (songCache.isNotEmpty) {
+      return songCache;
+    }
     try {
       final Map<String, Song> songMap = {};
 
@@ -80,6 +93,7 @@ class DataProvider extends BaseProvider {
         songMap[song.id] = song;
       });
 
+      songCache = songMap;
       return songMap;
     } catch (error) {
       rethrow;
@@ -87,6 +101,10 @@ class DataProvider extends BaseProvider {
   }
 
   Future<Map<String, UserModel>> fetchAllUsers() async {
+    if (usersCache.isNotEmpty) {
+      return usersCache;
+    }
+
     try {
       final Map<String, UserModel> userMap = {};
 
@@ -102,6 +120,7 @@ class DataProvider extends BaseProvider {
         userMap[user.uid] = user;
       });
 
+      usersCache = userMap;
       return userMap;
     } catch (error) {
       rethrow;
@@ -151,6 +170,7 @@ class DataProvider extends BaseProvider {
     try {
       usersReference.doc().set(user.toJson).then((value) => null).onError(
           (error, stackTrace) => AppMessage.errorMessage(error.toString()));
+      usersCache[user.uid] = user;
       return true;
     } catch (error) {
       rethrow;
@@ -166,6 +186,7 @@ class DataProvider extends BaseProvider {
           .then((value) => null)
           .onError(
               (error, stackTrace) => AppMessage.errorMessage(error.toString()));
+      usersCache[updatedUser.uid] = updatedUser;
       return true;
     } catch (error) {
       rethrow;

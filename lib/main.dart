@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_roster_admin/helpers/app_message.dart';
+import 'package:music_roster_admin/models/common/screen_name.dart';
+import 'package:music_roster_admin/modules/common/widgets/custom_page.dart';
 import 'package:music_roster_admin/modules/dashboard/dashboard_screen.dart';
 import 'package:music_roster_admin/modules/manage_members/manage_members_screen.dart';
 import 'package:music_roster_admin/modules/planner/planner_screen.dart';
@@ -67,12 +69,12 @@ class TeamRoster extends StatelessWidget {
             theme: ThemeData.light().copyWith(
               scaffoldBackgroundColor: AppColors.background,
               textTheme:
-                  GoogleFonts.assistantTextTheme(Theme.of(context).textTheme)
+                  GoogleFonts.nunitoTextTheme(Theme.of(context).textTheme)
                       .apply(bodyColor: AppColors.label),
             ),
             // home: ManageMembersScreen(),
-            home: SongLibraryScreen(),
-            // home: DashboardScreen(),
+            // home: SongLibraryScreen(),
+            home: DashboardScreen(),
           ),
         );
       }),
