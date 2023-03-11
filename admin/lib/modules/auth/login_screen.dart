@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_roster_admin/constants/constants.dart';
 import 'package:music_roster_admin/api/providers/auth_provider.dart';
-import 'package:music_roster_admin/modules/account/account_screen.dart';
-import 'package:music_roster_admin/modules/auth/widgets/google_login_button.dart';
+import 'package:music_roster_admin/modules/auth/google_login_button.dart';
 import 'package:music_roster_admin/router/router.dart';
 import 'package:provider/provider.dart';
 
@@ -28,22 +27,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _initApp() async {
     _authProvider = Provider.of<AuthProvider>(context, listen: false);
-    // check if user is signed in
     final user = await _authProvider.restorePreviousSession();
     if (user != null) {
       Get.toNamed(Routes.accountScreen,
           arguments: Routes.accountArgument(user));
-      // Navigator.of(context).pushReplacement(
-      //   MaterialPageRoute(
-      //     builder: (context) => AccountScreen(
-      //       user: user,
-      //     ),
-      //   ),
-      // );
     }
-    // _auth = FirebaseAuth.instanceFor(app: defaultApp);
-    // // immediately check whether the user is signed in
-    // checkIfUserIsSignedIn();
   }
 
   @override
@@ -56,7 +44,6 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Row(),
               _renderLogoTitleView(),
               GoogleSignInButton(onVerifySucceed: (user) {
                 _onVerifySucceed(user);
@@ -99,10 +86,5 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _onVerifySucceed(User user) async {
     Get.toNamed(Routes.accountScreen, arguments: Routes.accountArgument(user));
-    // Navigator.of(context).pushReplacement(
-    //   MaterialPageRoute(
-    //     builder: (context) => AccountScreen(),
-    //   ),
-    // );
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_roster_admin/api/providers/auth_provider.dart';
 import 'package:music_roster_admin/constants/constants.dart';
-import 'package:music_roster_admin/modules/auth/screens/login_screen.dart';
+import 'package:music_roster_admin/modules/auth/login_screen.dart';
 import 'package:music_roster_admin/router/router.dart';
 import 'package:provider/provider.dart';
 

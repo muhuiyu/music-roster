@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:music_roster_admin/constants/constants.dart';
 import 'package:music_roster_admin/modules/account/account_screen.dart';
-import 'package:music_roster_admin/modules/auth/screens/login_screen.dart';
+import 'package:music_roster_admin/modules/auth/login_screen.dart';
 import 'package:music_roster_admin/modules/availability/availability_screen.dart';
 import 'package:music_roster_admin/modules/common/widgets/custom_page.dart';
 import 'package:music_roster_admin/modules/dashboard/dashboard_screen.dart';
