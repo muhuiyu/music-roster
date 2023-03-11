@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_roster_admin/helpers/app_message.dart';
 import 'package:music_roster_admin/models/common/screen_name.dart';
+import 'package:music_roster_admin/modules/auth/screens/login_screen.dart';
 import 'package:music_roster_admin/modules/common/widgets/custom_page.dart';
 import 'package:music_roster_admin/modules/dashboard/dashboard_screen.dart';
 import 'package:music_roster_admin/modules/manage_members/manage_members_screen.dart';
@@ -74,7 +75,7 @@ class TeamRoster extends StatelessWidget {
             ),
             // home: ManageMembersScreen(),
             // home: SongLibraryScreen(),
-            home: DashboardScreen(),
+            home: LoginScreen(),
           ),
         );
       }),
