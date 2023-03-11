@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "949364282512",
+    "project_id": "music-team-roster",
+    "storage_bucket": "music-team-roster.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949364282512:android:657e6255e56f56d21d3415",
+        "android_client_info": {
+          "package_name": "com.example.music_roster"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "949364282512-mohgemnonee466epjbsou0hjjsqq2e8a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCL3uQM272MdCQLTP5LXxhnzRKCo04_kZQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "949364282512-mohgemnonee466epjbsou0hjjsqq2e8a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "949364282512-5c3b749gsnn43232dgqapd30m4222ec8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.musicRoster"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
